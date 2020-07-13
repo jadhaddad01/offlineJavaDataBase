@@ -252,17 +252,22 @@ public class Main{
 
 	public static void main(String[] args) {
 		//Intro
-		introOutro(true);
+		introOutro(true); //true for intro
 
 		//Checking Password
 		passCheck();
 
 		//Creating and Loading HashData List
+		HashDataList list = new HashDataList();
+		list.loadData();
+		System.out.println(list.sizeInformationDatabase());
+
+
 
 
 
 		//Outro
-		introOutro(false);
+		introOutro(false); //false for outro
 		
 	}
 }
