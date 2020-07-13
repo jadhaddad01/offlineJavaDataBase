@@ -147,6 +147,32 @@ public class HashDataList{
 		return informationDatabase.size();
 	}
 
+	//encrypt method encrypts a String by shifting each char up by charShift
+	private static String encrypt(String toBeEncrypted, int charShift){
+		char[] ch = toBeEncrypted.toCharArray(); //char array
+		int i = 0;
+		for(char c : ch){
+			c += charShift; //shift up by charShift
+			ch[i] = c;
+			i++;
+		}
+		String encrypted = new String(ch); //switch back to String
+		return encrypted;
+	}
+
+	//decrypt method decrypts a String by shifting each char down by charShift
+	private static String decrypt(String toBeDecrypted, int charShift){
+		char[] ch = toBeDecrypted.toCharArray(); //char array
+		int i = 0;
+		for(char c : ch){
+			c -= charShift; //shift down by charShift
+			ch[i] = c;
+			i++;
+		}
+		String decrypted = new String(ch); //switch back to String
+		return decrypted;
+	}
+
 	private void addPersonHash(String detailToAdd, HashMap<String, ArrayList<Person>> hashToAdd, Person toAdd){
 		if(hashToAdd.containsKey(detailToAdd)){
 			ArrayList<Person> tmp = new ArrayList<Person>();
@@ -711,16 +737,16 @@ public class HashDataList{
 	      	// Writes the string to the file
 	      	for(int i = 0; i < informationDatabase.size(); i++){
 		    	toSave = informationDatabase.get(i);
-		      	output.write(toSave.getFirstName() + "\n");
-		      	output.write(toSave.getLastName() + "\n");
-		      	output.write(toSave.getPhoneNumber() + "\n");
-		      	output.write(toSave.getAddressNumber() + "\n");
-		      	output.write(toSave.getAddressRoad() + "\n");
-		      	output.write(toSave.getAddressCity() + "\n");
-		      	output.write(toSave.getAddressProvince() + "\n");
-		      	output.write(toSave.getAddressCountry() + "\n");
-		      	output.write(toSave.getAddressPostalCode() + "\n");
-		      	output.write(toSave.getDescription() + "\n");
+		      	output.write(encrypt(toSave.getFirstName(), 20) + "\n");
+		      	output.write(encrypt(toSave.getLastName(), 20) + "\n");
+		      	output.write(encrypt(String.valueOf(toSave.getPhoneNumber()), 20) + "\n");
+		      	output.write(encrypt(String.valueOf(toSave.getAddressNumber()), 20) + "\n");
+		      	output.write(encrypt(toSave.getAddressRoad(), 20) + "\n");
+		      	output.write(encrypt(toSave.getAddressCity(), 20) + "\n");
+		      	output.write(encrypt(toSave.getAddressProvince(), 20) + "\n");
+		      	output.write(encrypt(toSave.getAddressCountry(), 20) + "\n");
+		      	output.write(encrypt(toSave.getAddressPostalCode(), 20) + "\n");
+		      	output.write(encrypt(toSave.getDescription(), 20) + "\n");
 	      	}
 
 	      	// Closes the writer
@@ -744,16 +770,16 @@ public class HashDataList{
 			i = Integer.parseInt(br.readLine());
 
 			while(i != 0){
-				toLoad.setFirstName(br.readLine());
-				toLoad.setLastName(br.readLine());
-				toLoad.setPhoneNumber(Long.parseLong(br.readLine()));
-				toLoad.setAddressNumber(Integer.parseInt(br.readLine()));
-				toLoad.setAddressRoad(br.readLine());
-				toLoad.setAddressCity(br.readLine());
-				toLoad.setAddressProvince(br.readLine());
-				toLoad.setAddressCountry(br.readLine());
-				toLoad.setAddressPostalCode(br.readLine());
-				toLoad.setDescription(br.readLine());
+				toLoad.setFirstName(decrypt(br.readLine(), 20));
+				toLoad.setLastName(decrypt(br.readLine(), 20));
+				toLoad.setPhoneNumber(Long.parseLong(decrypt(br.readLine(), 20)));
+				toLoad.setAddressNumber(Integer.parseInt(decrypt(br.readLine(), 20)));
+				toLoad.setAddressRoad(decrypt(br.readLine(), 20));
+				toLoad.setAddressCity(decrypt(br.readLine(), 20));
+				toLoad.setAddressProvince(decrypt(br.readLine(), 20));
+				toLoad.setAddressCountry(decrypt(br.readLine(), 20));
+				toLoad.setAddressPostalCode(decrypt(br.readLine(), 20));
+				toLoad.setDescription(decrypt(br.readLine(), 20));
 
 				addPerson(toLoad, true);
 				toLoad = new Person();
