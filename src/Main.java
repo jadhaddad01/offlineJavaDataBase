@@ -159,7 +159,7 @@ public class Main{
 		return continuePassSave;
 	}
 
-	private static void troubleshootMissingFile(boolean truePassFalseData, boolean missingData){
+	public static void troubleshootMissingFile(boolean truePassFalseData, boolean missingData){
 		if(truePassFalseData){
 			if(!missingData){
 				System.out.println(ANSI_RED + "\nCRITICAL ERROR! PASS.txt File Not Found!" + ANSI_RESET);
@@ -192,7 +192,8 @@ public class Main{
 			}
 		}
 		else{ //MAKE TROUBLESHOOT FOR DATA.TXT
-			System.out.println(ANSI_RED + "CRITICAL ERROR! DATA.txt File Not Found!" + ANSI_RESET);
+			System.out.println(ANSI_RED + "CRITICAL ERROR! DATA.txt File Error!" + ANSI_RESET);
+			System.out.println("Troubleshooting DATA file Error:");
 		}
 	}
 
@@ -260,11 +261,12 @@ public class Main{
 		//Creating and Loading HashData List
 		HashDataList list = new HashDataList();
 		list.loadData();
-		System.out.println(list.sizeInformationDatabase());
 
 
 
 
+		//Save data and create a backup
+		list.saveData();
 
 		//Outro
 		introOutro(false); //false for outro
