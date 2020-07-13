@@ -775,7 +775,7 @@ public class HashDataList{
 			Files.copy(original, backup, StandardCopyOption.REPLACE_EXISTING);
 		}
 		catch(Exception e){
-			
+
 		}
 	}
 
@@ -812,6 +812,7 @@ public class HashDataList{
 		}
 		catch(Exception e){
 			Main.troubleshootMissingFile(false,false); //whatever crashes it means there is no data
+			loadData(); //after troubleshooting we try again
 		}
 
 	}

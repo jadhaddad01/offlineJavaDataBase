@@ -17,6 +17,11 @@ import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 import java.util.HashMap;
 import java.util.ArrayList;
+import java.nio.file.Path; 
+import java.nio.file.Paths;
+import java.nio.file.Files;
+import java.io.File;
+import java.nio.file.StandardCopyOption;
 
 public class Main{
 	//text colors
@@ -192,8 +197,47 @@ public class Main{
 			}
 		}
 		else{ //MAKE TROUBLESHOOT FOR DATA.TXT
-			System.out.println(ANSI_RED + "CRITICAL ERROR! DATA.txt File Error!" + ANSI_RESET);
+			System.out.println(ANSI_RED + "\nCRITICAL ERROR! DATA.txt File Error!" + ANSI_RESET);
 			System.out.println("Troubleshooting DATA file Error:");
+
+			//Check if there is DATABACKUP
+			boolean checkBackup = true;
+			System.out.print("     -- Checking for DATABACKUP.");
+			try{
+				BufferedReader br = new BufferedReader(new FileReader("../data/DATABACKUP.txt"));
+				System.out.println(" " + ANSI_GREEN + ANSI_CHECKMARK + ANSI_RESET);
+			}
+			catch(Exception e){
+				System.out.println(" " + ANSI_RED + "x" + ANSI_RESET);
+				checkBackup = false;
+			}
+
+			if(checkBackup){
+				System.out.print("     -- Creating DATA file and Copying DATABACKUP to DATA File.");
+				try{
+					FileWriter file = new FileWriter("../data/DATA.txt"); //Create a new file DATA.txt
+				    Path original = Paths.get("../data/DATABACKUP.txt");
+					Path backup = Paths.get("../data/DATA.txt");
+					Files.copy(original, backup, StandardCopyOption.REPLACE_EXISTING);
+					System.out.println(" " + ANSI_GREEN + ANSI_CHECKMARK + ANSI_RESET);
+				}
+				catch(Exception e){
+					System.out.println(" " + ANSI_RED + "x" + ANSI_RESET);
+				}
+			}
+			else{
+				System.out.print("     -- Creating and Initializing DATA file.");
+				try{
+					FileWriter file = new FileWriter("../data/DATA.txt"); //Create a new file DATA.txt
+					BufferedWriter output = new BufferedWriter(file);
+			      	output.write("0"); //default size of list is 0
+			      	output.close();
+			      	System.out.println(" " + ANSI_GREEN + ANSI_CHECKMARK + ANSI_RESET);
+				}
+				catch(Exception e){
+					System.out.println(" " + ANSI_RED + "x" + ANSI_RESET);
+				}
+			}
 		}
 	}
 
@@ -261,7 +305,6 @@ public class Main{
 		//Creating and Loading HashData List
 		HashDataList list = new HashDataList();
 		list.loadData();
-
 
 
 
