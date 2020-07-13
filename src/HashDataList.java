@@ -17,7 +17,11 @@ import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 import java.util.HashMap;
 import java.util.ArrayList;
-
+import java.nio.file.Path; 
+import java.nio.file.Paths;
+import java.nio.file.Files;
+import java.io.File;
+import java.nio.file.StandardCopyOption;
 
 public class HashDataList{
 	//text colors
@@ -721,13 +725,20 @@ public class HashDataList{
 		return searching;
 	}
 
+	private static void copyFile(File source, File dest) throws IOException {
+ 	   Files.copy(source.toPath(), dest.toPath());
+	}
+
 	public void saveData(){
 
 		Person toSave = new Person();
 
 		try {
-	      	// Creates a FileWriter
+	      	// Creates a FileWriter DATA
 	      	FileWriter file = new FileWriter("../data/DATA.txt");
+
+	      	//Create backup file
+	      	FileWriter fileBackup = new FileWriter("../data/DATABACKUP.txt");
 
 	      	// Creates a BufferedWriter
 	      	BufferedWriter output = new BufferedWriter(file);
@@ -756,6 +767,16 @@ public class HashDataList{
 	    catch (Exception e) {
 	      
 	    }
+
+	    //Create the backup
+	    try{
+		    Path original = Paths.get("../data/DATA.txt");
+			Path backup = Paths.get("../data/DATABACKUP.txt");
+			Files.copy(original, backup, StandardCopyOption.REPLACE_EXISTING);
+		}
+		catch(Exception e){
+			
+		}
 	}
 
 
@@ -790,7 +811,7 @@ public class HashDataList{
 			br.close();
 		}
 		catch(Exception e){
-
+			Main.troubleshootMissingFile(false,false); //whatever crashes it means there is no data
 		}
 
 	}
