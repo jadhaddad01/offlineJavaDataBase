@@ -147,6 +147,21 @@ public class HashDataList{
 		return informationDatabase.size();
 	}
 
+	private void addPersonHash(String detailToAdd, HashMap<String, ArrayList<Person>> hashToAdd, Person toAdd){
+		if(hashToAdd.containsKey(detailToAdd)){
+			ArrayList<Person> tmp = new ArrayList<Person>();
+			tmp = hashToAdd.get(detailToAdd);
+			tmp.add(toAdd);
+			hashToAdd.remove(detailToAdd);
+			hashToAdd.put(detailToAdd, tmp);
+		}
+		else{
+			ArrayList<Person> tmp = new ArrayList<Person>();
+			tmp.add(toAdd);
+			hashToAdd.put(detailToAdd, tmp);
+		}
+	}
+
 	public void addPerson(Person person, boolean descriptionDate){
 		if(person == null){
 			return;
@@ -171,32 +186,10 @@ public class HashDataList{
 		String addressCountry = toAdd.getAddressCountry();
 		String addressPostalCode = toAdd.getAddressPostalCode();
 
-		if(firstNameHash.containsKey(firstName)){
-			ArrayList<Person> firstNameArray = new ArrayList<Person>();
-			firstNameArray = firstNameHash.get(firstName);
-			firstNameArray.add(toAdd);
-			firstNameHash.remove(firstName);
-			firstNameHash.put(firstName, firstNameArray);
-		}
-		else{
-			ArrayList<Person> firstNameArray = new ArrayList<Person>();
-			firstNameArray.add(toAdd);
-			firstNameHash.put(firstName, firstNameArray);
-		}
+		addPersonHash(firstName, firstNameHash, toAdd);
+		addPersonHash(lastName, lastNameHash, toAdd);
 
-		if(lastNameHash.containsKey(lastName)){
-			ArrayList<Person> lastNameArray = new ArrayList<Person>();
-			lastNameArray = lastNameHash.get(lastName);
-			lastNameArray.add(toAdd);
-			lastNameHash.remove(lastName);
-			lastNameHash.put(lastName, lastNameArray);
-		}
-		else{
-			ArrayList<Person> lastNameArray = new ArrayList<Person>();
-			lastNameArray.add(toAdd);
-			lastNameHash.put(lastName, lastNameArray);
-		}
-
+		//PHONE AND ADDRESS NUMBER CANNOT BE CALLED SINCE THEY HAVE LONG + INT NOT STRING
 		if(phoneNumberHash.containsKey(phoneNumber)){
 			ArrayList<Person> phoneNumberArray = new ArrayList<Person>();
 			phoneNumberArray = phoneNumberHash.get(phoneNumber);
@@ -223,70 +216,40 @@ public class HashDataList{
 			addressNumberHash.put(addressNumber, addressNumberArray);
 		}
 
-		if(addressRoadHash.containsKey(addressRoad)){
-			ArrayList<Person> addressRoadArray = new ArrayList<Person>();
-			addressRoadArray = addressRoadHash.get(addressRoad);
-			addressRoadArray.add(toAdd);
-			addressRoadHash.remove(addressRoad);
-			addressRoadHash.put(addressRoad, addressRoadArray);
-		}
-		else{
-			ArrayList<Person> addressRoadArray = new ArrayList<Person>();
-			addressRoadArray.add(toAdd);
-			addressRoadHash.put(addressRoad, addressRoadArray);
+		addPersonHash(addressRoad, addressRoadHash, toAdd);
+		addPersonHash(addressCity, addressCityHash, toAdd);
+		addPersonHash(addressProvince, addressProvinceHash, toAdd);
+		addPersonHash(addressCountry, addressCountryHash, toAdd);
+		addPersonHash(addressPostalCode, addressPostalCodeHash, toAdd);
+
+	}
+
+	private String[] firstCheck(HashMap<String, ArrayList<Person>> hashToCheck, String detailToCheck, boolean matchCheck, ArrayList<Person> searching, ArrayList<Person> tmp){
+		String tmp1 = "";
+
+		if(matchCheck){
+			System.out.print(detailToCheck + ": ");
+			tmp1 = scan.nextLine();
+			if(tmp1.equals("exit") || tmp1.equals("Exit")){
+				System.exit(0);
+			}
+			if(!tmp1.equals("")){
+				try{
+					tmp = hashToCheck.get(tmp1);
+					searching.addAll(tmp);
+				}
+				catch(Exception e){
+					System.out.println(ANSI_RED + "ERROR! "+ ANSI_RESET + detailToCheck + " not found");
+					matchCheck = false;
+				}
+			}
 		}
 
-		if(addressCityHash.containsKey(addressCity)){
-			ArrayList<Person> addressCityArray = new ArrayList<Person>();
-			addressCityArray = addressCityHash.get(addressCity);
-			addressCityArray.add(toAdd);
-			addressCityHash.remove(addressCity);
-			addressCityHash.put(addressCity, addressCityArray);
-		}
-		else{
-			ArrayList<Person> addressCityArray = new ArrayList<Person>();
-			addressCityArray.add(toAdd);
-			addressCityHash.put(addressCity, addressCityArray);
-		}
+		String[] strArray = new String[2];
+		strArray[0] = tmp1;
+		strArray[1] = String.valueOf(matchCheck);
 
-		if(addressProvinceHash.containsKey(addressProvince)){
-			ArrayList<Person> addressProvinceArray = new ArrayList<Person>();
-			addressProvinceArray = addressProvinceHash.get(addressProvince);
-			addressProvinceArray.add(toAdd);
-			addressProvinceHash.remove(addressProvince);
-			addressProvinceHash.put(addressProvince, addressProvinceArray);
-		}
-		else{
-			ArrayList<Person> addressProvinceArray = new ArrayList<Person>();
-			addressProvinceArray.add(toAdd);
-			addressProvinceHash.put(addressProvince, addressProvinceArray);
-		}
-
-		if(addressCountryHash.containsKey(addressCountry)){
-			ArrayList<Person> addressCountryArray = new ArrayList<Person>();
-			addressCountryArray = addressCountryHash.get(addressCountry);
-			addressCountryArray.add(toAdd);
-			addressCountryHash.remove(addressCountry);
-			addressCountryHash.put(addressCountry, addressCountryArray);
-		}
-		else{
-			ArrayList<Person> addressCountryArray = new ArrayList<Person>();
-			addressCountryArray.add(toAdd);
-			addressCountryHash.put(addressCountry, addressCountryArray);
-		}
-
-		if(addressPostalCodeHash.containsKey(addressPostalCode)){
-			ArrayList<Person> addressPostalCodeArray = new ArrayList<Person>();
-			addressPostalCodeArray = addressPostalCodeHash.get(addressPostalCode);
-			addressPostalCodeArray.add(toAdd);
-			addressPostalCodeHash.remove(addressPostalCode);
-			addressPostalCodeHash.put(addressPostalCode, addressPostalCodeArray);
-		}
-		else{
-			ArrayList<Person> addressPostalCodeArray = new ArrayList<Person>();
-			addressPostalCodeArray.add(toAdd);
-			addressPostalCodeHash.put(addressPostalCode, addressPostalCodeArray);
-		}
+		return strArray;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -325,40 +288,13 @@ public class HashDataList{
 
 		System.out.println(ANSI_PURPLE_BACKGROUND + "Step 1" + ANSI_RESET +": Enter individual's information.\n(Press Enter to skip unknown information)\n");
 
+		String[] strArray = firstCheck(firstNameHash, "First Name", match, searching, tmp);
+		firstName = strArray[0];
+		match = Boolean.parseBoolean(strArray[1]);
 
-		System.out.print("First Name: ");
-		firstName = scan.nextLine();
-		if(firstName.equals("exit") || firstName.equals("Exit")){
-			System.exit(0);
-		}
-		if(!firstName.equals("")){
-			try{
-				tmp = firstNameHash.get(firstName);
-				searching.addAll(tmp);
-			}
-			catch(Exception e){
-				System.out.println(ANSI_RED + "ERROR! "+ ANSI_RESET + "First name not found");
-				match = false;
-			}
-		}
-
-		if(match){
-			System.out.print("Last Name: ");
-			lastName = scan.nextLine();
-			if(lastName.equals("exit") || lastName.equals("Exit")){
-				System.exit(0);
-			}
-			if(!lastName.equals("")){
-				try{
-					tmp = lastNameHash.get(lastName);
-					searching.addAll(tmp);
-				}
-				catch(Exception e){
-					System.out.println(ANSI_RED + "ERROR! "+ ANSI_RESET + "Last name not found");
-					match = false;
-				}
-			}
-		}
+		strArray = firstCheck(lastNameHash, "Last Name", match, searching, tmp);
+		lastName = strArray[0];
+		match = Boolean.parseBoolean(strArray[1]);
 
 		if(match){
 			while(tmptmp1){
@@ -438,95 +374,25 @@ public class HashDataList{
 			tmptmp2 = true;
 		}
 
-		if(match){
-			System.out.print("Address Road: ");
-			addressRoad = scan.nextLine();
-			if(addressRoad.equals("exit") || addressRoad.equals("Exit")){
-				System.exit(0);
-			}
-			if(!addressRoad.equals("")){
-				try{
-					tmp = addressRoadHash.get(addressRoad);
-					searching.addAll(tmp);
-				}
-				catch(Exception e){
-					System.out.println(ANSI_RED + "ERROR! "+ ANSI_RESET + "Address road not found");
-					match = false;
-				}
-			}
-		}
+		strArray = firstCheck(addressRoadHash, "Address Road", match, searching, tmp);
+		addressRoad = strArray[0];
+		match = Boolean.parseBoolean(strArray[1]);
 
-		if(match){
-			System.out.print("City: ");
-			addressCity = scan.nextLine();
-			if(addressCity.equals("exit") || addressCity.equals("Exit")){
-				System.exit(0);
-			}
-			if(!addressCity.equals("")){
-				try{
-					tmp = addressCityHash.get(addressCity);
-					searching.addAll(tmp);
-				}
-				catch(Exception e){
-					System.out.println(ANSI_RED + "ERROR! "+ ANSI_RESET + "City not found");
-					match = false;
-				}
-			}
-		}
+		strArray = firstCheck(addressCityHash, "City", match, searching, tmp);
+		addressCity = strArray[0];
+		match = Boolean.parseBoolean(strArray[1]);
 
-		if(match){
-			System.out.print("Province: ");
-			addressProvince = scan.nextLine();
-			if(addressProvince.equals("exit") || addressProvince.equals("Exit")){
-				System.exit(0);
-			}
-			if(!addressProvince.equals("")){
-				try{
-					tmp = addressProvinceHash.get(addressProvince);
-					searching.addAll(tmp);
-				}
-				catch(Exception e){
-					System.out.println(ANSI_RED + "ERROR! "+ ANSI_RESET + "Province not found");
-					match = false;
-				}
-			}
-		}
+		strArray = firstCheck(addressProvinceHash, "Province", match, searching, tmp);
+		addressProvince = strArray[0];
+		match = Boolean.parseBoolean(strArray[1]);
 
-		if(match){
-			System.out.print("Country: ");
-			addressCountry = scan.nextLine();
-			if(addressCountry.equals("exit") || addressCountry.equals("Exit")){
-				System.exit(0);
-			}
-			if(!addressCountry.equals("")){
-				try{
-					tmp = addressCountryHash.get(addressCountry);
-					searching.addAll(tmp);
-				}
-				catch(Exception e){
-					System.out.println(ANSI_RED + "ERROR! "+ ANSI_RESET + "Country not found");
-					match = false;
-				}
-			}
-		}
+		strArray = firstCheck(addressCountryHash, "Country", match, searching, tmp);
+		addressCountry = strArray[0];
+		match = Boolean.parseBoolean(strArray[1]);
 
-		if(match){
-			System.out.print("Postal Code: ");
-			addressPostalCode = scan.nextLine();
-			if(addressPostalCode.equals("exit") || addressPostalCode.equals("Exit")){
-				System.exit(0);
-			}
-			if(!addressPostalCode.equals("")){
-				try{
-					tmp = addressPostalCodeHash.get(addressPostalCode);
-					searching.addAll(tmp);
-				}
-				catch(Exception e){
-					System.out.println(ANSI_RED + "ERROR! "+ ANSI_RESET + "Postal Code not found");
-					match = false;
-				}
-			}
-		}
+		strArray = firstCheck(addressPostalCodeHash, "Postal Code", match, searching, tmp);
+		addressPostalCode = strArray[0];
+		match = Boolean.parseBoolean(strArray[1]);
 
 		//Gives True if No Inputs are Given
 		checkNoInputs = !(!firstName.equals("") || 
@@ -554,133 +420,116 @@ public class HashDataList{
 		
 		if(continueCheck){
 			System.out.print("     -- Checking individuals who match all inputs.");
+			
 			//First Name
 			tmp.clear();
-			for(int i = 0; i < searching.size(); i++){ //IMPORTANT SWITCH BETWEEN IF BELOW AND THIS FOR FOR BETTER EFFICIENCY
-				// checkIndividual = true;
-				if(!firstName.equals("")){
+			if(!firstName.equals("")){
+				for(int i = 0; i < searching.size(); i++){
 					if(searching.get(i).getFirstName().equals(firstName)){
 						tmp.add(searching.get(i));
 					}
 				}
-			}
-			if(!firstName.equals("")){
+
 				searching = (ArrayList<Person>)tmp.clone();
 			}
 
 			//Last Name
 			tmp.clear();
-			for(int i = 0; i < searching.size(); i++){
-				// checkIndividual = true;
-				if(!lastName.equals("")){
+			if(!lastName.equals("")){
+				for(int i = 0; i < searching.size(); i++){
 					if(searching.get(i).getLastName().equals(lastName)){
 						tmp.add(searching.get(i));
 					}
 				}
-			}
-			if(!lastName.equals("")){
+
 				searching = (ArrayList<Person>)tmp.clone();
 			}
 
 			//Phone Number
 			tmp.clear();
-			for(int i = 0; i < searching.size(); i++){
-				// checkIndividual = true;
-				if(!phoneNumber.equals("")){
+			if(!phoneNumber.equals("")){
+				for(int i = 0; i < searching.size(); i++){
 					Long phoneNumberTmp1 = Long.parseLong(phoneNumber, 10);
 					Long phoneNumberTmp2 = searching.get(i).getPhoneNumber();
 					if(phoneNumberTmp2.equals(phoneNumberTmp1)){
 						tmp.add(searching.get(i));
 					}
 				}
-			}
-			if(!phoneNumber.equals("")){
+
 				searching = (ArrayList<Person>)tmp.clone();
 			}
 
 			//Address Number
 			tmp.clear();
-			for(int i = 0; i < searching.size(); i++){
-				// checkIndividual = true;
-				if(!addressNumber.equals("")){
+			if(!addressNumber.equals("")){
+				for(int i = 0; i < searching.size(); i++){
 					Integer addressNumberTmp1 = Integer.parseInt(addressNumber);
 					Integer addressNumberTmp2 = searching.get(i).getAddressNumber();
 					if(addressNumberTmp2.equals(addressNumberTmp1)){
 						tmp.add(searching.get(i));
 					}
 				}
-			}
-			if(!addressNumber.equals("")){
+
 				searching = (ArrayList<Person>)tmp.clone();
 			}
 
 			//Address Road
 			tmp.clear();
-			for(int i = 0; i < searching.size(); i++){
-				// checkIndividual = true;
-				if(!addressRoad.equals("")){
+			if(!addressRoad.equals("")){
+				for(int i = 0; i < searching.size(); i++){
 					if(searching.get(i).getAddressRoad().equals(addressRoad)){
 						tmp.add(searching.get(i));
 					}
 				}
-			}
-			if(!addressRoad.equals("")){
+
 				searching = (ArrayList<Person>)tmp.clone();
 			}
 
 			//City
 			tmp.clear();
-			for(int i = 0; i < searching.size(); i++){
-				// checkIndividual = true;
-				if(!addressCity.equals("")){
+			if(!addressCity.equals("")){
+				for(int i = 0; i < searching.size(); i++){
 					if(searching.get(i).getAddressCity().equals(addressCity)){
 						tmp.add(searching.get(i));
 					}
 				}
-			}
-			if(!addressCity.equals("")){
+
 				searching = (ArrayList<Person>)tmp.clone();
 			}
 
 			//Province
 			tmp.clear();
-			for(int i = 0; i < searching.size(); i++){
-				// checkIndividual = true;
-				if(!addressProvince.equals("")){
+			if(!addressProvince.equals("")){
+				for(int i = 0; i < searching.size(); i++){
 					if(searching.get(i).getAddressProvince().equals(addressProvince)){
 						tmp.add(searching.get(i));
 					}
 				}
-			}
-			if(!addressProvince.equals("")){
+
 				searching = (ArrayList<Person>)tmp.clone();
 			}
 
 			//Country
 			tmp.clear();
-			for(int i = 0; i < searching.size(); i++){
-				// checkIndividual = true;
-				if(!addressCountry.equals("")){
+			if(!addressCountry.equals("")){
+				for(int i = 0; i < searching.size(); i++){
 					if(searching.get(i).getAddressCountry().equals(addressCountry)){
 						tmp.add(searching.get(i));
 					}
 				}
-			}
-			if(!addressCountry.equals("")){
+
 				searching = (ArrayList<Person>)tmp.clone();
 			}
 
 			//Postal Code
 			tmp.clear();
-			for(int i = 0; i < searching.size(); i++){
-				// checkIndividual = true;
-				if(!addressPostalCode.equals("")){
+			if(!addressPostalCode.equals("")){
+				for(int i = 0; i < searching.size(); i++){
 					if(searching.get(i).getAddressPostalCode().equals(addressPostalCode)){
 						tmp.add(searching.get(i));
 					}
 				}
-			}
-			if(!addressPostalCode.equals("")){
+
 				searching = (ArrayList<Person>)tmp.clone();
 			}
 
@@ -796,7 +645,7 @@ public class HashDataList{
 					//Print to file
 					try {
 				      	// Creates a FileWriter
-				      	FileWriter file = new FileWriter(fileName);
+				      	FileWriter file = new FileWriter("../data/" + fileName);
 
 				      	// Creates a BufferedWriter
 				      	BufferedWriter output = new BufferedWriter(file);
@@ -812,10 +661,12 @@ public class HashDataList{
 				      	}
 
 				    	if(searching.size() == 1){
-							System.out.println(ANSI_GREEN + "SUCCESS! " + fileName + " has been created with " + searching.size() + " Individual's Information\n");
+							System.out.println(ANSI_GREEN + "SUCCESS! " + fileName + " has been created with " + searching.size() + " Individual's Information" + ANSI_RESET);
+							System.out.println("The file is located at the /data directory of the master directory.\n");
 						}
 						if(searching.size() > 1){
-							System.out.println(ANSI_GREEN + "SUCCESS! " + fileName + " has been created with " + searching.size() + " Individuals' Information\n");
+							System.out.println(ANSI_GREEN + "SUCCESS! " + fileName + " has been created with " + searching.size() + " Individuals' Information" + ANSI_RESET);
+							System.out.println("The file is located at the /data directory of the master directory.\n");
 						}
 
 				      	// Closes the writer
