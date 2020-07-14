@@ -317,6 +317,171 @@ public class Main{
     	System.out.println("-------------------");
 	}
 
+	private static String menu(){
+		System.out.println("\n\nInformation Database Menu.\n--------------------------");
+		System.out.println("1 -> " + ANSI_BLUE + "Print" + ANSI_RESET + " Full Database.");
+		System.out.println("2 -> " + ANSI_YELLOW + "Search" + ANSI_RESET + " a Specific Person.");
+		System.out.println("3 -> " + ANSI_GREEN + "Add" + ANSI_RESET + " Person to Database.");
+		System.out.println("4 -> " + ANSI_PURPLE + "Password" + ANSI_RESET + " Change for Login.");
+		/*System.out.println("5 -> " + ANSI_RED + "Remove" + ANSI_RESET + " Person from Database.");*/
+		System.out.println("--------------------------");
+
+		//Selection
+		System.out.print("Choice: ");
+		String menuInt = scan.nextLine();
+		if(menuInt.equals("exit") || menuInt.equals("Exit")){
+    		System.exit(0);
+    	}
+
+    	boolean wrongChoice = true;
+		while(wrongChoice){
+			if(menuInt.equals("1") || menuInt.equals("2") || menuInt.equals("3") || menuInt.equals("4")/* || menuInt.equals("5")*/){
+				wrongChoice = false;
+			}
+			if(!menuInt.equals("1") && !menuInt.equals("2") && !menuInt.equals("3") && !menuInt.equals("4")/* && !menuInt.equals("5")*/){
+				System.out.println("Please choose a number between 1 and 5. [1 -> " + ANSI_BLUE + "Print" + ANSI_RESET + "]");
+				System.out.println("                                        [2 -> " + ANSI_YELLOW + "Search" + ANSI_RESET + "]");
+				System.out.println("                                        [3 -> " + ANSI_GREEN + "Add" + ANSI_RESET + "]");
+				System.out.println("                                        [4 -> " + ANSI_PURPLE + "Password" + ANSI_RESET + "]");
+				/*System.out.println("                                        [5 -> " + ANSI_RED + "Remove" + ANSI_RESET + "]");*/
+				System.out.print("Choice: ");
+				menuInt = scan.nextLine();
+				if(menuInt.equals("exit") || menuInt.equals("Exit")){
+		    		System.exit(0);
+		    	}
+			}
+		}
+
+		return menuInt;
+	}
+
+	public static void printUserChoice(HashDataList list){
+		System.out.println("----------------------------");
+		System.out.println("1 -> " + ANSI_BLUE + "Print to Console." + ANSI_RESET);
+		System.out.println("2 -> " + ANSI_YELLOW + "Print to Custom File." + ANSI_RESET);
+		System.out.println("----------------------------");
+
+		System.out.print("Choice: ");
+		String menuInt = scan.nextLine();
+		if(menuInt.equals("exit") || menuInt.equals("Exit")){
+			System.exit(0);
+		}
+
+		boolean menu = true;
+		while(menu){
+			if(menuInt.equals("1") || menuInt.equals("2")){
+				menu = false;
+			}
+			if(!menuInt.equals("1") && !menuInt.equals("2")){
+				System.out.println("Please choose a number between 1 and 2. [1 -> " + ANSI_BLUE + "Console" + ANSI_RESET + "]");
+				System.out.println("                                        [2 -> " + ANSI_YELLOW + "Custom File" + ANSI_RESET + "]");
+				System.out.print("Choice: ");
+				menuInt = scan.nextLine();
+				if(menuInt.equals("exit") || menuInt.equals("Exit")){
+		    		System.exit(0);
+		    	}
+			}
+		}
+
+		if(menuInt.equals("1")){
+			System.out.println("\nPrint to Console Requested.");
+			System.out.println("---------------------------");
+
+			for(int i = 0; i < list.sizeInformationDatabase(); i++){
+				System.out.println(list.getPerson(i));
+			}
+			
+		}
+
+		if(menuInt.equals("2")){
+			System.out.println("\nPrint to Custom File Requested.");
+			System.out.println("-------------------------------");
+			String fileName = "";
+
+			boolean flag2 = true;
+			while(flag2){
+				System.out.println(ANSI_PURPLE_BACKGROUND + "1" + ANSI_RESET + " -- Please Choose a Name for your File. (" + ANSI_BOLD + "NAME" + ANSI_RESET + ".txt)");
+				System.out.print("Choice for " + ANSI_BOLD + "NAME" + ANSI_RESET + ": ");
+				fileName = scan.nextLine();
+				if(fileName.equals("exit") || fileName.equals("Exit")){
+					System.exit(0);
+				}
+
+				System.out.print("\n");
+				System.out.println(ANSI_PURPLE_BACKGROUND + "2" + ANSI_RESET + " -- Confirm File Name. ");
+				
+				fileName = fileName + ".txt";
+				System.out.println("File Name = " + ANSI_BOLD + fileName + ANSI_RESET + "\nConfirm? (Y/N)");
+				System.out.print("Choice: ");
+				String confirmFileName = scan.nextLine();
+				if(confirmFileName.equals("exit") || confirmFileName.equals("Exit")){
+		    		System.exit(0);
+		   		}
+
+		   		boolean flag1 = true;
+				while(flag1){
+					if(confirmFileName.equals("Y") || confirmFileName.equals("y")){
+						flag1 = false;
+					}
+					if(confirmFileName.equals("N") || confirmFileName.equals("n")){
+						flag1 = false;
+					}
+					if(!confirmFileName.equals("Y") && !confirmFileName.equals("y") && !confirmFileName.equals("N") && !confirmFileName.equals("n")){
+						System.out.println("Y = Correct File Name | N = False File Name");
+						System.out.print("Confirm? (" + ANSI_BOLD + fileName + ANSI_RESET + "): ");
+						confirmFileName = scan.nextLine();
+						if(confirmFileName.equals("exit") || confirmFileName.equals("Exit")){
+				    		System.exit(0);
+				    	}
+					}
+				}
+
+				if(fileName.equals(".txt")){
+					System.out.println(ANSI_RED + "FAIL! .txt Not A Valid File Name!\n" + ANSI_RESET);
+				}
+				else{
+					flag2 = false;
+				}
+			}
+
+			//Print to file
+			try {
+		      	// Creates a FileWriter
+		      	FileWriter file = new FileWriter("../data/" + fileName);
+
+		      	// Creates a BufferedWriter
+		      	BufferedWriter output = new BufferedWriter(file);
+
+		      	// Writes the string to the file
+		      	Person person = new Person();
+		      	for(int i = 0; i < list.sizeInformationDatabase(); i++){
+			    	person = list.getPerson(i);
+			      	output.write("Name: " + person.getFirstName() + " " + person.getLastName() + "\n");
+			      	output.write("Phone number: " + person.getPhoneNumber() + "\n");
+			      	output.write("Address: " + person.getAddressNumber() + " " + person.getAddressRoad() + ", " + person.getAddressCity() + ", " + person.getAddressProvince() + ", " + person.getAddressCountry() + "\n");
+			      	output.write("PC: " + person.getAddressPostalCode() + "\n");
+			      	output.write("Description: " + person.getDescription() + "\n\n");
+		      	}
+
+		    	if(list.sizeInformationDatabase() == 1){
+					System.out.println(ANSI_GREEN + "SUCCESS! " + fileName + " has been created with " + list.sizeInformationDatabase() + " Individual's Information" + ANSI_RESET);
+					System.out.println("The file is located at the /data directory of the master directory.\n");
+				}
+				if(list.sizeInformationDatabase() > 1){
+					System.out.println(ANSI_GREEN + "SUCCESS! " + fileName + " has been created with " + list.sizeInformationDatabase() + " Individuals' Information" + ANSI_RESET);
+					System.out.println("The file is located at the /data directory of the master directory.\n");
+				}
+
+		      	// Closes the writer
+		      	output.close();
+		    }
+
+		    catch (Exception e) {
+		      e.getStackTrace();
+		    }
+		}
+	}
+
 	public static void main(String[] args) {
 		//Intro
 		introOutro(true); //true for intro
@@ -328,7 +493,18 @@ public class Main{
 		HashDataList list = new HashDataList();
 		list.loadData();
 
+		boolean backToMenu = true;
+		while(backToMenu){
+			String choice = menu();
 
+			if(choice.equals("1")){
+				System.out.println("\nPrint Database Requested. Where Would You Like To Print?");
+				printUserChoice(list);
+			}
+
+			break;
+
+		}
 
 		//Save data and create a backup
 		list.saveData();

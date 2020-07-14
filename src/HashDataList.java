@@ -151,6 +151,10 @@ public class HashDataList{
 		return informationDatabase.size();
 	}
 
+	public Person getPerson(int i){
+		return informationDatabase.get(i);
+	}
+
 	//encrypt method encrypts a String by shifting each char up by charShift
 	private static String encrypt(String toBeEncrypted, int charShift){
 		char[] ch = toBeEncrypted.toCharArray(); //char array
@@ -589,125 +593,11 @@ public class HashDataList{
 				//Because there are people to print we will ask if the user wants them in the console or in a TXT file.
 				System.out.print("\n");
 				System.out.println(ANSI_PURPLE_BACKGROUND + "Step 3" + ANSI_RESET +": Where to Print Data.");
-				System.out.println("----------------------------");
-				System.out.println("1 -> " + ANSI_BLUE + "Print to Console." + ANSI_RESET);
-				System.out.println("2 -> " + ANSI_YELLOW + "Print to Custom File." + ANSI_RESET);
-				System.out.println("----------------------------");
-
-				System.out.print("Choice: ");
-				menuInt = scan.nextLine();
-				if(menuInt.equals("exit") || menuInt.equals("Exit")){
-	    			System.exit(0);
-	    		}
-
-	    		while(menu){
-					if(menuInt.equals("1") || menuInt.equals("2")){
-						menu = false;
-					}
-					if(!menuInt.equals("1") && !menuInt.equals("2")){
-						System.out.println("Please choose a number between 1 and 2. [1 -> " + ANSI_BLUE + "Console" + ANSI_RESET + "]");
-						System.out.println("                                        [2 -> " + ANSI_YELLOW + "Custom File" + ANSI_RESET + "]");
-						System.out.print("Choice: ");
-						menuInt = scan.nextLine();
-						if(menuInt.equals("exit") || menuInt.equals("Exit")){
-				    		System.exit(0);
-				    	}
-					}
+				HashDataList hashtmp = new HashDataList();
+				for(int i = 0; i < searching.size(); i++){
+					hashtmp.addPerson(searching.get(i), false);
 				}
-
-				if(menuInt.equals("1")){
-					System.out.println("\nPrint to Console Requested.");
-					System.out.println("---------------------------");
-
-					for(int i = 0; i < searching.size(); i++){
-						System.out.println(searching.get(i));
-					}
-					
-				}
-
-				if(menuInt.equals("2")){
-					System.out.println("\nPrint to Custom File Requested.");
-					System.out.println("-------------------------------");
-
-					while(flag2){
-						System.out.println(ANSI_PURPLE_BACKGROUND + "1" + ANSI_RESET + " -- Please Choose a Name for your File. (" + ANSI_BOLD + "NAME" + ANSI_RESET + ".txt)");
-						System.out.print("Choice for " + ANSI_BOLD + "NAME" + ANSI_RESET + ": ");
-						fileName = scan.nextLine();
-						if(fileName.equals("exit") || fileName.equals("Exit")){
-							System.exit(0);
-						}
-
-						System.out.print("\n");
-						System.out.println(ANSI_PURPLE_BACKGROUND + "2" + ANSI_RESET + " -- Confirm File Name. ");
-						
-						fileName = fileName + ".txt";
-						System.out.println("File Name = " + ANSI_BOLD + fileName + ANSI_RESET + "\nConfirm? (Y/N)");
-						System.out.print("Choice: ");
-						confirmFileName = scan.nextLine();
-						if(confirmFileName.equals("exit") || confirmFileName.equals("Exit")){
-				    		System.exit(0);
-				   		}
-						while(flag1){
-							if(confirmFileName.equals("Y") || confirmFileName.equals("y")){
-								flag1 = false;
-							}
-							if(confirmFileName.equals("N") || confirmFileName.equals("n")){
-								flag1 = false;
-							}
-							if(!confirmFileName.equals("Y") && !confirmFileName.equals("y") && !confirmFileName.equals("N") && !confirmFileName.equals("n")){
-								System.out.println("Y = Correct File Name | N = False File Name");
-								System.out.print("Confirm? (" + ANSI_BOLD + fileName + ANSI_RESET + "): ");
-								confirmFileName = scan.nextLine();
-								if(confirmFileName.equals("exit") || confirmFileName.equals("Exit")){
-						    		System.exit(0);
-						    	}
-							}
-						}
-
-						if(fileName.equals(".txt")){
-							System.out.println(ANSI_RED + "FAIL! .txt Not A Valid File Name!\n" + ANSI_RESET);
-						}
-						else{
-							flag2 = false;
-						}
-					}
-
-					//Print to file
-					try {
-				      	// Creates a FileWriter
-				      	FileWriter file = new FileWriter("../data/" + fileName);
-
-				      	// Creates a BufferedWriter
-				      	BufferedWriter output = new BufferedWriter(file);
-
-				      	// Writes the string to the file
-				      	for(int i = 0; i < searching.size(); i++){
-					    	searchedPerson = searching.get(i);
-					      	output.write("Name: " + searchedPerson.getFirstName() + " " + searchedPerson.getLastName() + "\n");
-					      	output.write("Phone number: " + searchedPerson.getPhoneNumber() + "\n");
-					      	output.write("Address: " + searchedPerson.getAddressNumber() + " " + searchedPerson.getAddressRoad() + ", " + searchedPerson.getAddressCity() + ", " + searchedPerson.getAddressProvince() + ", " + searchedPerson.getAddressCountry() + "\n");
-					      	output.write("PC: " + searchedPerson.getAddressPostalCode() + "\n");
-					      	output.write("Description: " + searchedPerson.getDescription() + "\n\n");
-				      	}
-
-				    	if(searching.size() == 1){
-							System.out.println(ANSI_GREEN + "SUCCESS! " + fileName + " has been created with " + searching.size() + " Individual's Information" + ANSI_RESET);
-							System.out.println("The file is located at the /data directory of the master directory.\n");
-						}
-						if(searching.size() > 1){
-							System.out.println(ANSI_GREEN + "SUCCESS! " + fileName + " has been created with " + searching.size() + " Individuals' Information" + ANSI_RESET);
-							System.out.println("The file is located at the /data directory of the master directory.\n");
-						}
-
-				      	// Closes the writer
-				      	output.close();
-				    }
-
-				    catch (Exception e) {
-				      e.getStackTrace();
-				    }
-
-				}
+				Main.printUserChoice(hashtmp);
 			}
 		}
 
