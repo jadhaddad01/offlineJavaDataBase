@@ -42,15 +42,15 @@ private static String encrypt(String toBeEncrypted, int charShift){
 ### Decryption Method
 ```java
 //decrypt method decrypts a String by shifting each char down by charShift 
-    private static String decrypt(String toBeDecrypted, int charShift){ 
-        char[] ch = toBeDecrypted.toCharArray(); //char array 
+private static String decrypt(String toBeDecrypted, int charShift){ 
+	char[] ch = toBeDecrypted.toCharArray(); //char array 
         int i = 0; 
         for(char c : ch){ 
-            c -= charShift; //shift down by charShift 
-            ch[i] = c; 
-            i++; 
+		c -= charShift; //shift down by charShift 
+            	ch[i] = c; 
+           	i++; 
         } 
         String decrypted = new String(ch); //switch back to String 
         return decrypted; 
-    }
+}
 ```
