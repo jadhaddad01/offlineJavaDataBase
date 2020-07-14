@@ -2,10 +2,10 @@
 This project is allows for the local secure storage of people's personal information, protected by a password and encryption to the data. 
  
 #### Table of Contents 
-1. [ Description. ](#desc)
-2. [ Encryption / Decryption. ](#encr)
-2.1 [Encryption Method](#encrmethod)
-2.2 [Decryption Method](#decrmethod)
+- [ Description. ](#desc)
+- [ Encryption / Decryption. ](#encr)
+* [Encryption Method](#encrmethod)
+* [Decryption Method](#decrmethod)
 
 <a name="desc"></a>
 ## Description
