@@ -323,7 +323,8 @@ public class Main{
 		System.out.println("2 -> " + ANSI_YELLOW + "Search" + ANSI_RESET + " a Specific Person.");
 		System.out.println("3 -> " + ANSI_GREEN + "Add" + ANSI_RESET + " Person to Database.");
 		System.out.println("4 -> " + ANSI_PURPLE + "Password" + ANSI_RESET + " Change for Login.");
-		/*System.out.println("5 -> " + ANSI_RED + "Remove" + ANSI_RESET + " Person from Database.");*/
+		System.out.println("5 -> " + ANSI_RED + "Exit" + ANSI_RESET + " Program. (Will Save Progress)");
+		/*System.out.println("6 -> " + ANSI_RED + "Remove" + ANSI_RESET + " Person from Database.");*/
 		System.out.println("--------------------------");
 
 		//Selection
@@ -335,15 +336,16 @@ public class Main{
 
     	boolean wrongChoice = true;
 		while(wrongChoice){
-			if(menuInt.equals("1") || menuInt.equals("2") || menuInt.equals("3") || menuInt.equals("4")/* || menuInt.equals("5")*/){
+			if(menuInt.equals("1") || menuInt.equals("2") || menuInt.equals("3") || menuInt.equals("4") || menuInt.equals("5") /* || menuInt.equals("6")*/){
 				wrongChoice = false;
 			}
-			if(!menuInt.equals("1") && !menuInt.equals("2") && !menuInt.equals("3") && !menuInt.equals("4")/* && !menuInt.equals("5")*/){
+			if(!menuInt.equals("1") && !menuInt.equals("2") && !menuInt.equals("3") && !menuInt.equals("4") && !menuInt.equals("5") /* && !menuInt.equals("6")*/){
 				System.out.println("Please choose a number between 1 and 5. [1 -> " + ANSI_BLUE + "Print" + ANSI_RESET + "]");
 				System.out.println("                                        [2 -> " + ANSI_YELLOW + "Search" + ANSI_RESET + "]");
 				System.out.println("                                        [3 -> " + ANSI_GREEN + "Add" + ANSI_RESET + "]");
 				System.out.println("                                        [4 -> " + ANSI_PURPLE + "Password" + ANSI_RESET + "]");
-				/*System.out.println("                                        [5 -> " + ANSI_RED + "Remove" + ANSI_RESET + "]");*/
+				System.out.println("                                        [5 -> " + ANSI_RED + "Exit" + ANSI_RESET + "]");
+				/*System.out.println("                                        [6 -> " + ANSI_RED + "Remove" + ANSI_RESET + "]");*/
 				System.out.print("Choice: ");
 				menuInt = scan.nextLine();
 				if(menuInt.equals("exit") || menuInt.equals("Exit")){
@@ -563,18 +565,25 @@ public class Main{
 
 		Person toAdd = new Person();
 
-		if(!firstName.equals("")) toAdd.setFirstName(firstName);
-		if(!lastName.equals("")) toAdd.setLastName(lastName);
-		if(!phoneNumber.equals("")) toAdd.setPhoneNumber(Long.parseLong(phoneNumber, 10));
-		if(!addressNumber.equals("")) toAdd.setAddressNumber(Integer.parseInt(addressNumber));
-		if(!addressRoad.equals("")) toAdd.setAddressRoad(addressRoad);
-		if(!addressCity.equals("")) toAdd.setAddressCity(addressCity);
-		if(!addressProvince.equals("")) toAdd.setAddressProvince(addressProvince);
-		if(!addressCountry.equals("")) toAdd.setAddressCountry(addressCountry);
-		if(!addressPostalCode.equals("")) toAdd.setAddressPostalCode(addressPostalCode);
-		if(!description.equals("")) toAdd.setDescription(description);
+		boolean checkIfInputted = false;
+		if(!firstName.equals("")){ toAdd.setFirstName(firstName); checkIfInputted = true;}
+		if(!lastName.equals("")) {toAdd.setLastName(lastName); checkIfInputted = true;}
+		if(!phoneNumber.equals("")) {toAdd.setPhoneNumber(Long.parseLong(phoneNumber, 10)); checkIfInputted = true;}
+		if(!addressNumber.equals("")) {toAdd.setAddressNumber(Integer.parseInt(addressNumber)); checkIfInputted = true;}
+		if(!addressRoad.equals("")) {toAdd.setAddressRoad(addressRoad); checkIfInputted = true;}
+		if(!addressCity.equals("")) {toAdd.setAddressCity(addressCity); checkIfInputted = true;}
+		if(!addressProvince.equals("")) {toAdd.setAddressProvince(addressProvince); checkIfInputted = true;}
+		if(!addressCountry.equals("")) {toAdd.setAddressCountry(addressCountry); checkIfInputted = true;}
+		if(!addressPostalCode.equals("")) {toAdd.setAddressPostalCode(addressPostalCode); checkIfInputted = true;}
+		if(!description.equals("")) {toAdd.setDescription(description); checkIfInputted = true;}
 
-		list.addPerson(toAdd, false);
+		if(checkIfInputted){
+			list.addPerson(toAdd, false);
+			System.out.println(ANSI_GREEN + "Success! " + ANSI_RESET + "1 Person's Information Has Been Added.");
+		}
+		else{
+			System.out.println(ANSI_RED + "Fail!" + ANSI_RESET + " No Information Given.");
+		}
 
 	}
 
@@ -728,6 +737,10 @@ public class Main{
 			if(choice.equals("4")){
 				System.out.println("\nChange Password Requested");
 				changePass();
+			}
+
+			if(choice.equals("5")){
+				break;
 			}
 
 		}
