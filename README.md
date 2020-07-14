@@ -41,7 +41,7 @@ javac Main.java
 ### Running the Program
 1. Make sure you have followed the [Installation Guide](#depd).
 2. Run the Program.
-3. When asked for a password, type: ##### password .
+3. When asked for a password, type: **password** .
 
 <a name="encr"></a>
 ## Encryption / Decryption
