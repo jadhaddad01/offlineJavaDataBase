@@ -5,6 +5,7 @@ This project is allows for the local secure storage of people's personal informa
 - [ Description ](#desc)
 - [Installation Guide](#inst)
   * [Dependencies](#depd)
+  * [Installation](#inst1)
 - [ Encryption / Decryption ](#encr)
   * [Encryption Method](#encrmethod)
   * [Decryption Method](#decrmethod)
@@ -22,6 +23,19 @@ This project is created using only the Java language. Using Ceasar Shift Cypher 
 - Requires Java 7 or higher to run.
 - Can run on Windows, Mac, or Linux.
 
+<a name="depd"></a>
+### Installation
+1. Clone repository to your system OR press code -> Download ZIP.
+2. If download as ZIP, extract offlineJavaDataBase-master.zip and access the extracted folder.
+3. Access the /src folder and copy its path. (../offlineJavaDataBase-master/src)
+4. Open terminal and cd into the src path.
+5. Compile Main.java
+
+Terminal:
+```
+cd ../offlineJavaDataBase-master/src
+javac Main.java
+```
 
 <a name="encr"></a>
 ## Encryption / Decryption
