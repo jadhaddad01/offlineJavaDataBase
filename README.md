@@ -4,8 +4,8 @@ This project is allows for the local secure storage of people's personal informa
 #### Table of Contents 
 1. [ Description. ](#desc)
 2. [ Encryption / Decryption. ](#encr)
- 2.1 [Encryption Method](#encrmethod)
- 2.2 [Decryption Method](#decrmethod)
+2.1 [Encryption Method](#encrmethod)
+2.2 [Decryption Method](#decrmethod)
 
 <a name="desc"></a>
 ## Description
