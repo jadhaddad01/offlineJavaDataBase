@@ -2,14 +2,16 @@
 This project is allows for the local secure storage of people's personal information, protected by a password and encryption to the data. 
  
 #### Table of Contents 
-- [ Description ](#desc)
+- [Description](#desc)
 - [Usage Guide](#inst)
   * [Dependencies](#depd)
   * [Installation](#inst1)
   * [Running Program](#runp)
-- [ Encryption / Decryption ](#encr)
+- [Encryption / Decryption](#encr)
   * [Encryption Method](#encrmethod)
   * [Decryption Method](#decrmethod)
+- [Contributors](#cont)
+- [License](#lics)
 
 <a name="desc"></a>
 ## Description
@@ -91,3 +93,11 @@ private static String decrypt(String toBeDecrypted, int charShift){
         return decrypted; 
 }
 ```
+
+<a name="cont"></a>
+## Contributors
+- Jad Haddad : jadmail01@gmail.com
+
+<a name="lics"></a>
+## License
+This project is licensed under the GPL-3.0 License. [License Details](../blob/master/LICENSE)
