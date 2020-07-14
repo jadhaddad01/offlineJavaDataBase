@@ -693,6 +693,7 @@ public class Main{
 	    	}
 	    }
 
+	    System.out.println(ANSI_GREEN + "SUCCESS! " + ANSI_RESET + "The New Password Has Been Created.");
 		System.out.println("-------------------");
 		return "";
 	}
