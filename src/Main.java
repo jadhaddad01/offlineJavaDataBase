@@ -584,7 +584,8 @@ public class Main{
 		passCheck();
 
 		//Choosing new pass
-		System.out.println(ANSI_PURPLE_BACKGROUND + "\nStep 2" + ANSI_RESET +": Choose a New Password.");
+		System.out.print("\n");
+		System.out.println(ANSI_PURPLE_BACKGROUND + "Step 2" + ANSI_RESET +": Choose a New Password.");
 		boolean newPassFlag = true;
 		boolean continueNewPass = true;
 		String newPass = "";
@@ -690,6 +691,7 @@ public class Main{
 				}
 	    	}
 		}
+		System.out.println("-------------------");
 	}
 
 	public static void main(String[] args) {
