@@ -149,7 +149,7 @@ This lets the user know, if at any point there is a failure, where that failure 
 <a name="dsdg"></a>
 ### Design Diagram
 The following design diagram is a class diagram of the system. This diagram has been drawn using [Umple](https://www.umple.org/)
-
+![alt text](https://github.com/jadhaddad01/offlineJavaDataBase/blob/master/img/umple.png)
 
 <a name="encr"></a>
 ## Encryption / Decryption
