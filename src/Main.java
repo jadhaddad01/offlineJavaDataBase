@@ -578,6 +578,120 @@ public class Main{
 
 	}
 
+	private static void changePass(){
+		//Old Pass check
+		System.out.print(ANSI_PURPLE_BACKGROUND + "Step 1" + ANSI_RESET +": Enter your Old Password.");
+		passCheck();
+
+		//Choosing new pass
+		System.out.println(ANSI_PURPLE_BACKGROUND + "\nStep 2" + ANSI_RESET +": Choose a New Password.");
+		boolean newPassFlag = true;
+		boolean continueNewPass = true;
+		String newPass = "";
+		String newPassConfirm = "";
+
+		String encryptedPassKey = "";
+		String passInTxtNewPass = "";
+
+		FileWriter file;
+		BufferedWriter output;
+		BufferedReader brNewPass = null;
+
+		while(newPassFlag){
+			System.out.print("Enter a New Password: ");
+    		newPass = scan.nextLine();
+    		if(newPass.equals("exit") || newPass.equals("Exit")){
+	    		System.exit(0);
+	    	}
+	    	System.out.print("Confirm New Password: ");
+	    	newPassConfirm = scan.nextLine();
+	    	if(newPassConfirm.equals("exit") || newPassConfirm.equals("Exit")){
+	    		System.exit(0);
+	    	}
+	    	if(!newPass.equals(newPassConfirm)){
+	    		System.out.println(ANSI_RED + "Error!" + ANSI_RESET + "Confirmation Does Not Match. Enter New Password Again.");
+	    	}
+	    	else if(newPass.equals("")){
+	    		System.out.println(ANSI_RED + "Error!" + ANSI_RESET + "Password Cannot Be Null. Enter New Password Again.");
+	    	}
+	    	else{
+	    		System.out.println("\nSaving New Password.");
+	    		//Creating Encryption Key
+	    		System.out.print("     -- Encrypting New Password.");
+				try{
+					encryptedPassKey = encrypt(newPass,10);
+					System.out.println(" " + ANSI_GREEN + ANSI_CHECKMARK + ANSI_RESET);
+				}
+				catch(Exception e){
+					System.out.println(" " + ANSI_RED + "x" + ANSI_RESET);
+					continueNewPass = false;
+				}
+				//Testing Encryption Key
+				System.out.print("     -- Testing Encryption Key.");
+				if(decrypt(encryptedPassKey,10).equals(newPass) && continueNewPass){
+					System.out.println(" " + ANSI_GREEN + ANSI_CHECKMARK + ANSI_RESET);
+				}
+				else{
+					System.out.println(" " + ANSI_RED + "x" + ANSI_RESET);
+					continueNewPass = false;
+				}
+				//Writing New Encryption Key to PASS.txt
+				System.out.print("     -- Writing Encryption Key to File.");
+				if(continueNewPass){
+					try {
+				      file = new FileWriter("../data/PASS.txt");
+				      output = new BufferedWriter(file);
+				      output.write(encryptedPassKey);
+				      output.close();
+				      System.out.println(" " + ANSI_GREEN + ANSI_CHECKMARK + ANSI_RESET);
+				    }
+
+				    catch (Exception e) {
+				      System.out.println(" " + ANSI_RED + "x" + ANSI_RESET);
+				      continueNewPass = false;
+				    }
+				}
+				else{
+					System.out.println(" " + ANSI_RED + "x" + ANSI_RESET);
+					continueNewPass = false;
+				}
+				//Testing Encryption Key from File
+				System.out.print("     -- Testing Encryption Key from File.");
+				if(continueNewPass){
+					try{
+						brNewPass = new BufferedReader(new FileReader("../data/PASS.txt"));
+					}
+					catch(Exception e){
+						System.out.println("TXT File NOT FOUND.");
+						System.exit(0);
+					}
+
+					try{
+				    	passInTxtNewPass = brNewPass.readLine();
+					    brNewPass.close();
+					}
+					catch(Exception e){
+						System.out.println("NO DATA IN FILE.");
+						System.exit(0);
+					}
+
+					if(decrypt(passInTxtNewPass,10).equals(newPass)){
+						System.out.println(" " + ANSI_GREEN + ANSI_CHECKMARK + ANSI_RESET);
+						newPassFlag = false; 
+					}
+					else{
+						System.out.println(" " + ANSI_RED + "x" + ANSI_RESET);
+						continueNewPass = false;
+					}
+				}
+				else{
+					System.out.println(" " + ANSI_RED + "x" + ANSI_RESET);
+				    continueNewPass = false;
+				}
+	    	}
+		}
+	}
+
 	public static void main(String[] args) {
 		//Intro
 		introOutro(true); //true for intro
@@ -590,6 +704,7 @@ public class Main{
 		list.loadData();
 
 		boolean backToMenu = true;
+		//CONTINUE TO CHANGE PASS
 		while(backToMenu){
 			String choice = menu();
 
@@ -606,6 +721,11 @@ public class Main{
 			if(choice.equals("3")){
 				System.out.println("\nAdd Person Requested.");
 				addPeople(list);
+			}
+
+			if(choice.equals("4")){
+				System.out.println("\nChange Password Requested");
+				changePass();
 			}
 
 		}
