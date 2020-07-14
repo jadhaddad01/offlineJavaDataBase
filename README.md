@@ -100,4 +100,4 @@ private static String decrypt(String toBeDecrypted, int charShift){
 
 <a name="lics"></a>
 ## License
-This project is licensed under the GPL-3.0 License. [License Details](../blob/master/LICENSE)
+This project is licensed under the GPL-3.0 License. [License Details](../master/LICENSE)
