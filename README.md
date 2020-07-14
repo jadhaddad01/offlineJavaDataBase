@@ -27,7 +27,7 @@ This project is created using only the Java language. Using Ceasar Shift Cypher 
 - Requires Java 7 or higher to run.
 - Can run on Windows, Mac, or Linux.
 
-<a name="int1"></a>
+<a name="inst1"></a>
 ### Installation Guide
 1. Clone repository to your system OR press code -> Download ZIP.
 2. If download as ZIP, extract offlineJavaDataBase-master.zip and access the extracted folder.
