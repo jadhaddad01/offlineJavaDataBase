@@ -16,7 +16,9 @@ This project is created using only the Java language. Using Ceasar Shift Cypher 
 ## Encryption / Decryption
 
 The encryption used in this project is the [Ceasar Shift Cypher](https://en.wikipedia.org/wiki/Caesar_cipher). This encryption shifts the characters of a String up by a certain number of characters in the [ASCII](https://www.ascii-code.com/) alphabet.
+
 The decryption uses the same principle, but instead of shifting upwards, it shifts the encrypted String downwards by the same amount to regain the original String.
+
 In the source code, the personal data file uses a shift of 20 characters while the password file uses a shift of 10.
 
 <a name="encrmethod"></a>
@@ -34,4 +36,21 @@ private static String encrypt(String toBeEncrypted, int charShift){
 	String encrypted = new String(ch); //switch back to String
 	return encrypted;
 }
+```
+
+<a name="decrmethod"></a>
+### Decryption Method
+```java
+//decrypt method decrypts a String by shifting each char down by charShift 
+    private static String decrypt(String toBeDecrypted, int charShift){ 
+        char[] ch = toBeDecrypted.toCharArray(); //char array 
+        int i = 0; 
+        for(char c : ch){ 
+            c -= charShift; //shift down by charShift 
+            ch[i] = c; 
+            i++; 
+        } 
+        String decrypted = new String(ch); //switch back to String 
+        return decrypted; 
+    }
 ```
