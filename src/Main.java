@@ -1,3 +1,6 @@
+//Author: Jad Haddad
+
+//important imports
 import java.util.Scanner;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -78,25 +81,27 @@ public class Main{
 		return decrypted;
 	}
 
+	//intro outro method helps us save coding space when true is intro and false is outro
 	private static void introOutro(boolean intro){ //saving a little real estate by making the outro and intro in one method
-		if(!intro) System.out.println("\nHave a good day, Master.");
+		if(!intro) System.out.println("\nHave a good day, Chef."); //the user is always #1 in software
 
-		//Showing the date
+		//Showing the date is useless but impresses the ladies
 		DateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss z");
 		Date date = new Date();
 		System.out.println(sdf.format(date));
 
-		if(intro) System.out.println("Welcome to your personal database, Master.");
+		if(intro) System.out.println("Welcome to your personal database, Chef.");
 	}
 
+	//Testing, Encrypting and then storing a given password
 	private static boolean saveEncryptTestPass(String pass){
 		boolean continuePassSave = true;
 
 		//Creating Encryption Key
-		System.out.print("     -- Encrypting New Password.");
+		System.out.print("     -- Encrypting New Password."); //these already tell you what is happening so no need for comments
 		String encPass = "";
 		try{
-			encPass = encrypt(pass,10);
+			encPass = encrypt(pass,10); //we encrypt with a shift of 10 to change it up from the data encrytion so that people will take 2 minutes instead of 1 to crack the code
 			System.out.println(" " + ANSI_GREEN + ANSI_CHECKMARK + ANSI_RESET);
 		}
 		catch(Exception e){
@@ -106,7 +111,7 @@ public class Main{
 
 		//Testing Encryption Key
 		System.out.print("     -- Testing Encryption Key.");
-		if(decrypt(encPass,10).equals(pass) && continuePassSave){
+		if(decrypt(encPass,10).equals(pass) && continuePassSave){ //and decrypt with a shift of 10
 			System.out.println(" " + ANSI_GREEN + ANSI_CHECKMARK + ANSI_RESET);
 		}
 		else{
@@ -164,14 +169,15 @@ public class Main{
 		return continuePassSave;
 	}
 
+	//if DATA DATABACKUP or PASS are missing we troubleshoot the issue here.
 	public static void troubleshootMissingFile(boolean truePassFalseData, boolean missingData){
-		if(truePassFalseData){
+		if(truePassFalseData){ //Troubleshooting for PASS.TXT
 			if(!missingData){
-				System.out.println(ANSI_RED + "\nCRITICAL ERROR! PASS.txt File Not Found!" + ANSI_RESET);
+				System.out.println(ANSI_RED + "\nCRITICAL ERROR! PASS.txt File Not Found!" + ANSI_RESET); //if the PASS file is not there someone is messing with your files
 				System.out.println("Troubleshooting Missing Pass file:");
 			}
 			else{
-				System.out.println(ANSI_RED + "\nERROR! No Data Found in PASS.txt!" + ANSI_RESET);
+				System.out.println(ANSI_RED + "\nERROR! No Data Found in PASS.txt!" + ANSI_RESET); //can happen if someone erased the data in the file
 				System.out.println("Troubleshooting Missing Data in Pass file:");
 			}
 
@@ -180,7 +186,7 @@ public class Main{
 			System.out.print("     -- Creating Generic Password With New File.");
 			String genPass = "";
 			try{
-				genPass = "password";
+				genPass = "password"; //if you want to change the generic password to give people change it here
 				FileWriter passFile = new FileWriter("../data/PASS.txt");
 				System.out.println(" " + ANSI_GREEN + ANSI_CHECKMARK + ANSI_RESET);
 			}
@@ -202,7 +208,7 @@ public class Main{
 		    	System.out.println("-------------------");
 			}
 		}
-		else{ //MAKE TROUBLESHOOT FOR DATA.TXT
+		else{ //Troubleshooting for DATA.TXT
 			System.out.println(ANSI_RED + "\nCRITICAL ERROR! DATA.txt File Error!" + ANSI_RESET);
 			System.out.println("Troubleshooting DATA file Error:");
 
@@ -210,7 +216,7 @@ public class Main{
 			boolean checkBackup = true;
 			System.out.print("     -- Checking for DATABACKUP.");
 			try{
-				BufferedReader br = new BufferedReader(new FileReader("../data/DATABACKUP.txt"));
+				BufferedReader br = new BufferedReader(new FileReader("../data/DATABACKUP.txt")); //if databackup is available we don't lose any data
 				System.out.println(" " + ANSI_GREEN + ANSI_CHECKMARK + ANSI_RESET);
 			}
 			catch(Exception e){
@@ -224,12 +230,12 @@ public class Main{
 					FileWriter file = new FileWriter("../data/DATA.txt"); //Create a new file DATA.txt
 				    Path original = Paths.get("../data/DATABACKUP.txt");
 					Path backup = Paths.get("../data/DATA.txt");
-					Files.copy(original, backup, StandardCopyOption.REPLACE_EXISTING);
+					Files.copy(original, backup, StandardCopyOption.REPLACE_EXISTING); //copying databackup to new data file
 					System.out.println(" " + ANSI_GREEN + ANSI_CHECKMARK + ANSI_RESET);
 
 					//success with how many people restored
 					BufferedReader br = new BufferedReader(new FileReader("../data/DATA.txt"));
-					int i = Integer.parseInt(br.readLine());
+					int i = Integer.parseInt(br.readLine()); //we just read how many people there is and make a beautiful success message that we restored them
 					if(i <= 1){ //1 or 0
 						System.out.println(ANSI_GREEN + "Success! " + ANSI_RESET +  i + " Person's Information Has Been Restored.");
 					}
@@ -263,6 +269,7 @@ public class Main{
 		}
 	}
 
+	//we check for the password to be able to change the password and to be able to enter the program
 	private static void passCheck(){
 		//Check if PASS.txt is here and if it isn't we create a new one with password
 		BufferedReader br;
@@ -270,7 +277,7 @@ public class Main{
 			br = new BufferedReader(new FileReader("../data/PASS.txt"));
 		}
 		catch(Exception e){
-			troubleshootMissingFile(true, false);
+			troubleshootMissingFile(true, false); //if pass doesn't exist we troubleshoot
 		}
 
 		try{
@@ -287,7 +294,8 @@ public class Main{
 		System.out.print("\nPlease enter your password: ");
 		String passInTxt = "";
     	String passWord = scan.nextLine();
-    	if(passWord.equals("exit") || passWord.equals("Exit")){
+    	//we don't use back to menu here since you would be able to go to the program without entering a passcode
+    	if(passWord.equals("exit") || passWord.equals("Exit")){ //force exit program
     		System.exit(0);
     	}
     	try{
@@ -300,6 +308,7 @@ public class Main{
 		}
 
 		boolean passwordcheck = true;
+		//if we don't have a successful password entry we try again
     	while(passwordcheck){
     		if(decrypt(passInTxt,10).equals(passWord)){
     			System.out.println(ANSI_GREEN + "Decryption Success." + ANSI_RESET);
@@ -309,7 +318,7 @@ public class Main{
 	    		System.out.println(ANSI_RED + "Decryption Failed." + ANSI_RESET);
 	    		System.out.print("Retype Password: ");
 	    		passWord = scan.nextLine();
-	    		if(passWord.equals("exit") || passWord.equals("Exit")){
+	    		if(passWord.equals("exit") || passWord.equals("Exit")){ //force exit program
 		    		System.exit(0);
 		    	}
 	    	}
@@ -317,6 +326,7 @@ public class Main{
     	System.out.println("-------------------");
 	}
 
+	//main menu program to choose what to do
 	private static String menu(){
 		System.out.println("\n\nInformation Database Menu.\n--------------------------");
 		System.out.println("1 -> " + ANSI_BLUE + "Print" + ANSI_RESET + " Full Database.");
@@ -324,11 +334,11 @@ public class Main{
 		System.out.println("3 -> " + ANSI_GREEN + "Add" + ANSI_RESET + " Person to Database.");
 		System.out.println("4 -> " + ANSI_PURPLE + "Password" + ANSI_RESET + " Change for Login.");
 		System.out.println("5 -> " + ANSI_RED + "Exit" + ANSI_RESET + " Program. (Will Save Progress)");
-		/*System.out.println("6 -> " + ANSI_RED + "Remove" + ANSI_RESET + " Person from Database.");*/
+		/*System.out.println("6 -> " + ANSI_RED + "Remove" + ANSI_RESET + " Person from Database.");*/ //templates as well as under in the menuInt check to add menu items
 		System.out.println("--------------------------");
 
 		//Selection
-		System.out.println(ANSI_PURPLE_BACKGROUND + "P.S" + ANSI_RESET + " -> At Any Input: [exit -> Force Quit Program.]\n                     [menu -> Return to Menu]");
+		System.out.println(ANSI_PURPLE_BACKGROUND + "P.S" + ANSI_RESET + " -> At Any Input: [exit -> Force Quit Program.]\n                     [menu -> Return to Menu]"); //P.S for if we need to come back here from any input or exit the program
 		System.out.print("Choice: ");
 		String menuInt = scan.nextLine();
 		if(menuInt.equals("menu") || menuInt.equals("Menu")){
@@ -338,6 +348,7 @@ public class Main{
     		System.exit(0);
     	}
 
+    	//we need to check if people have placed a good or bad input
     	boolean wrongChoice = true;
 		while(wrongChoice){
 			if(menuInt.equals("1") || menuInt.equals("2") || menuInt.equals("3") || menuInt.equals("4") || menuInt.equals("5") /* || menuInt.equals("6")*/){
@@ -364,6 +375,7 @@ public class Main{
 		return menuInt;
 	}
 
+	//where would the user like to print the list in a custom file or in the console? when we have 100000 people in the list it is better in the console
 	public static String printUserChoice(HashDataList list){
 		System.out.println("----------------------------");
 		System.out.println("1 -> " + ANSI_BLUE + "Print to Console." + ANSI_RESET);
@@ -379,6 +391,7 @@ public class Main{
 			System.exit(0);
 		}
 
+		//for bad inputs we retry
 		boolean menu = true;
 		while(menu){
 			if(menuInt.equals("1") || menuInt.equals("2")){
@@ -398,7 +411,7 @@ public class Main{
 			}
 		}
 
-		if(menuInt.equals("1")){
+		if(menuInt.equals("1")){ //basic console printing
 			System.out.println("\nPrint to Console Requested.");
 			System.out.println("---------------------------");
 
@@ -409,14 +422,15 @@ public class Main{
 			return "";
 		}
 
-		else{ //if it equals 2
+		else{ //if it equals 2 we make a custom file
 			System.out.println("\nPrint to Custom File Requested.");
 			System.out.println("-------------------------------");
 			String fileName = "";
 
+			//the user should choose the name of the file for grouping purposes maybe / the while loop is if a bad 
 			boolean flag2 = true;
 			while(flag2){
-				System.out.println(ANSI_PURPLE_BACKGROUND + "1" + ANSI_RESET + " -- Please Choose a Name for your File. (" + ANSI_BOLD + "NAME" + ANSI_RESET + ".txt)");
+				System.out.println(ANSI_PURPLE_BACKGROUND + "1" + ANSI_RESET + " -- Please Choose a Name for your File. (" + ANSI_BOLD + "NAME" + ANSI_RESET + ".txt)"); 
 				System.out.print("Choice for " + ANSI_BOLD + "NAME" + ANSI_RESET + ": ");
 				fileName = scan.nextLine();
 				if(fileName.equals("menu") || fileName.equals("Menu")){
@@ -427,7 +441,7 @@ public class Main{
 				}
 
 				System.out.print("\n");
-				System.out.println(ANSI_PURPLE_BACKGROUND + "2" + ANSI_RESET + " -- Confirm File Name. ");
+				System.out.println(ANSI_PURPLE_BACKGROUND + "2" + ANSI_RESET + " -- Confirm File Name. "); //maybe people accidentally inputted a bad file name
 				
 				fileName = fileName + ".txt";
 				System.out.println("File Name = " + ANSI_BOLD + fileName + ANSI_RESET + "\nConfirm? (Y/N)");
@@ -440,6 +454,7 @@ public class Main{
 		    		System.exit(0);
 		   		}
 
+		   		//bad inputs need to be retried for confirmation
 		   		boolean flag1 = true;
 				while(flag1){
 					if(confirmFileName.equals("Y") || confirmFileName.equals("y")){
@@ -462,6 +477,7 @@ public class Main{
 					}
 				}
 
+				//if people inputed nothing we retry
 				if(fileName.equals(".txt")){
 					System.out.println(ANSI_RED + "FAIL! .txt Not A Valid File Name!\n" + ANSI_RESET);
 				}
@@ -475,7 +491,7 @@ public class Main{
 		      	// Creates a BufferedWriter
 		      	BufferedWriter output = new BufferedWriter(file);
 
-		      	// Writes the string to the file
+		      	// we want to neatly print out the information to the file to get a 5 star review on yelp
 		      	Person person = new Person();
 		      	for(int i = 0; i < list.sizeInformationDatabase(); i++){
 			    	person = list.getPerson(i);
@@ -491,7 +507,7 @@ public class Main{
 					System.out.println(ANSI_PURPLE_BACKGROUND + "P.S" + ANSI_RESET + " -> The file is located at the /data directory of the master directory.\n");
 				}
 				if(list.sizeInformationDatabase() > 1){
-					System.out.println(ANSI_GREEN + "SUCCESS! " + fileName + " has been created with " + list.sizeInformationDatabase() + " Individuals' Information" + ANSI_RESET);
+					System.out.println(ANSI_GREEN + "SUCCESS! " + fileName + " has been created with " + list.sizeInformationDatabase() + " Individuals' Information" + ANSI_RESET); //I'm not going to say it again but you know.
 					System.out.println(ANSI_PURPLE_BACKGROUND + "P.S" + ANSI_RESET + " -> The file is located at the /data directory of the master directory.\n");
 				}
 
@@ -507,8 +523,9 @@ public class Main{
 		}
 	}
 
+	//when we want to add a Person we want to let the user input their information
 	private static String inputedDetails(String detailID){
-		if(detailID.equals("Phone Number")){
+		if(detailID.equals("Phone Number")){ //phone number is seperate to be able to parse Long
 			boolean flagPhone = true;
 			String input = "";
 			while(flagPhone){
@@ -523,7 +540,7 @@ public class Main{
 				if(!input.equals("")){
 					long tmpPhone = -1l;
 					try{
-						tmpPhone = Long.parseLong(input, 10);
+						tmpPhone = Long.parseLong(input, 10); //if the input cannot be parsed we retry
 						flagPhone = false;
 					}
 					catch(Exception e){
@@ -537,7 +554,7 @@ public class Main{
 
 			return input;
 		}
-		else if(detailID.equals("Address Number")){
+		else if(detailID.equals("Address Number")){ //address number is seperate to be able to parse int
 			boolean flagAddNum = true;
 			String input = "";
 			while(flagAddNum){
@@ -552,7 +569,7 @@ public class Main{
 				if(!input.equals("")){
 					long tmpAddNum = -1l;
 					try{
-						tmpAddNum = Integer.parseInt(input);
+						tmpAddNum = Integer.parseInt(input); //if the input cannot be parsed we retry
 						flagAddNum = false;
 					}
 					catch(Exception e){
@@ -568,7 +585,7 @@ public class Main{
 		}
 
 
-		else{
+		else{ //everything else is ok since we just need a String
 			System.out.print(detailID + ": ");
 			String input = scan.nextLine();
 			if(input.equals("menu") || input.equals("Menu")){
@@ -582,10 +599,11 @@ public class Main{
 		}
 	}
 
+	//Adding people by their relevant information
 	private static String addPeople(HashDataList list){
 		System.out.println(ANSI_PURPLE_BACKGROUND + "Step 1" + ANSI_RESET +": Enter individual's information.\n(Press Enter to skip unknown information)\n");
-		String firstName = inputedDetails("First Name");
-		if(firstName.equals("menu")) return "menu";
+		String firstName = inputedDetails("First Name"); //we call the above method inputedDetails to save some coding real estate here
+		if(firstName.equals("menu")) return "menu"; //if menu has been selected we return to menu
 		String lastName = inputedDetails("Last Name");
 		if(lastName.equals("menu")) return "menu";
 		String phoneNumber = inputedDetails("Phone Number");
@@ -605,10 +623,10 @@ public class Main{
 		String description = inputedDetails("Description");
 		if(description.equals("menu")) return "menu";
 
-		Person toAdd = new Person();
+		Person toAdd = new Person(); //now we start building the new Person
 
 		boolean checkIfInputted = false;
-		if(!firstName.equals("")){ toAdd.setFirstName(firstName); checkIfInputted = true;}
+		if(!firstName.equals("")){ toAdd.setFirstName(firstName); checkIfInputted = true;} //if the String is "" we don't set the information and leave it as its intialized variable "Unknown"
 		if(!lastName.equals("")) {toAdd.setLastName(lastName); checkIfInputted = true;}
 		if(!phoneNumber.equals("")) {toAdd.setPhoneNumber(Long.parseLong(phoneNumber, 10)); checkIfInputted = true;}
 		if(!addressNumber.equals("")) {toAdd.setAddressNumber(Integer.parseInt(addressNumber)); checkIfInputted = true;}
@@ -620,21 +638,22 @@ public class Main{
 		if(!description.equals("")) {toAdd.setDescription(description); checkIfInputted = true;}
 
 		if(checkIfInputted){
-			list.addPerson(toAdd, false);
+			list.addPerson(toAdd, false); //false to add the Added on Date description
 			System.out.println(ANSI_GREEN + "Success! " + ANSI_RESET + "1 Person's Information Has Been Added.");
 			return "";
 		}
-		else{
+		else{ //if no input was given we don't add the null Person
 			System.out.println(ANSI_RED + "Fail!" + ANSI_RESET + " No Information Given.");
 			return "";
 		}
 
 	}
 
+	//if we get a generic pass or people are bored of their password we let them change it here
 	private static String changePass(){
 		//Old Pass check
 		System.out.print(ANSI_PURPLE_BACKGROUND + "Step 1" + ANSI_RESET +": Enter your Old Password.");
-		passCheck();
+		passCheck(); //you can't change a password without confirming that you are allowed to do so
 
 		//Choosing new pass
 		System.out.print("\n");
@@ -643,6 +662,7 @@ public class Main{
 		String newPass = "";
 		String newPassConfirm = "";
 
+		//new password has to match the confirming one and they cannot be null so we would retry until a good password is inputted.
 		while(true){
 			System.out.print("Enter a New Password: ");
 			newPass = scan.nextLine();
@@ -677,52 +697,53 @@ public class Main{
 		return "";
 	}
 
+	//Finally this is the code that runs when you start the program
 	public static void main(String[] args) {
-		//Intro
+		//Intro to say hello to the Chef
 		introOutro(true); //true for intro
 
-		//Checking Password
+		//Checking Password to be able to enter the program menu
 		passCheck();
 
 		//Creating and Loading HashData List
 		HashDataList list = new HashDataList();
-		list.loadData();
+		list.loadData(); //load from Data file
 
-		//CONTINUE TO CHANGE PASS
+		//keep restarting the menu until 5 or exit is inputted
 		while(true){
 			String choice = menu();
-			if(choice.equals("menu")) continue;
+			if(choice.equals("menu")) continue; //if menu is inputted we go to the top of the while loop
 
 			if(choice.equals("1")){
 				System.out.println("\nPrint Database Requested. Where Would You Like To Print?");
-				if(printUserChoice(list).equals("menu")) continue;
+				if(printUserChoice(list).equals("menu")) continue; //if menu is inputted we go to the top of the while loop
 			}
 
 			if(choice.equals("2")){
 				System.out.println("\nSearch People Requested.");
-				if((list.searchPeople()).equals("menu")) continue;
+				if((list.searchPeople()).equals("menu")) continue; //if menu is inputted we go to the top of the while loop
 			}
 			
 			if(choice.equals("3")){
 				System.out.println("\nAdd Person Requested.");
-				if(addPeople(list).equals("menu")) continue;
+				if(addPeople(list).equals("menu")) continue; //if menu is inputted we go to the top of the while loop
 			}
 
 			if(choice.equals("4")){
 				System.out.println("\nChange Password Requested");
-				if(changePass().equals("menu")) continue;
+				if(changePass().equals("menu")) continue; //if menu is inputted we go to the top of the while loop
 			}
 
 			if(choice.equals("5")){
-				break;
+				break; //we get out of the while loop
 			}
 
 		}
 
 		//Save data and create a backup
-		list.saveData();
+		list.saveData(); //save to data file
 
-		//Outro
+		//Outro to say goodbye
 		introOutro(false); //false for outro
 		
 	}

@@ -1,3 +1,6 @@
+//Author: Jad Haddad
+
+//important imports
 import java.util.Scanner;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -67,9 +70,12 @@ public class HashDataList{
 	//Final Database
 	private ArrayList<Person> informationDatabase = new ArrayList<Person>();
 
+	//empty constructor starts our Data List with empty hashes and arraylist
 	public HashDataList(){
 		return;
 	}
+
+	//isEmpty function for each Hashlist and arraylist
 
 	public boolean isEmptyFirstName(){
 		return firstNameHash.isEmpty();
@@ -111,6 +117,8 @@ public class HashDataList{
 		return informationDatabase.isEmpty();
 	}
 
+	//size function for every hashlist and arraylist
+
 	public int sizeFirstName(){
 		return firstNameHash.size();
 	}
@@ -151,6 +159,7 @@ public class HashDataList{
 		return informationDatabase.size();
 	}
 
+	//Person getter at a certain index in the arraylist
 	public Person getPerson(int i){
 		return informationDatabase.get(i);
 	}
@@ -181,34 +190,36 @@ public class HashDataList{
 		return decrypted;
 	}
 
+	//add Person to Hash with each detail of information instead of writing the code 10 times
 	private void addPersonHash(String detailToAdd, HashMap<String, ArrayList<Person>> hashToAdd, Person toAdd){
-		if(hashToAdd.containsKey(detailToAdd)){
+		if(hashToAdd.containsKey(detailToAdd)){ //if the piece of information already exists in a Hash we only add to the array list in the hash
 			ArrayList<Person> tmp = new ArrayList<Person>();
 			tmp = hashToAdd.get(detailToAdd);
 			tmp.add(toAdd);
 			hashToAdd.remove(detailToAdd);
 			hashToAdd.put(detailToAdd, tmp);
 		}
-		else{
+		else{ //if the piece of information doesn't exist in a Hash already we create a new hash
 			ArrayList<Person> tmp = new ArrayList<Person>();
 			tmp.add(toAdd);
 			hashToAdd.put(detailToAdd, tmp);
 		}
 	}
 
-	public void addPerson(Person person, boolean descriptionDate){
-		if(person == null){
+	//add Person method adds a person to the hashes and final arraylist
+	public void addPerson(Person person, boolean descriptionDate){ //if false is given there is no Added on already in the description
+		if(person == null){ //we want to avoid system failure because there is no information
 			return;
 		}
 
 		Date startDate = new Date();
     	String date = sdf.format(startDate);
     	Person toAdd = person;
-    	if(!descriptionDate){
+    	if(!descriptionDate){ //when we load data it would not add another Added on Added on... only for new People in the list
 	    	toAdd.setDescription("Added on " + date + " | " + toAdd.getDescription());
     	}
 
-		informationDatabase.add(toAdd);
+		informationDatabase.add(toAdd); //we add the person to the final arraylist
 
 		String firstName = toAdd.getFirstName();
 		String lastName = toAdd.getLastName();
@@ -220,8 +231,8 @@ public class HashDataList{
 		String addressCountry = toAdd.getAddressCountry();
 		String addressPostalCode = toAdd.getAddressPostalCode();
 
-		addPersonHash(firstName, firstNameHash, toAdd);
-		addPersonHash(lastName, lastNameHash, toAdd);
+		addPersonHash(firstName, firstNameHash, toAdd); //we add the person with the first name to its hash
+		addPersonHash(lastName, lastNameHash, toAdd); //we add the person with the last name to its hash
 
 		//PHONE AND ADDRESS NUMBER CANNOT BE CALLED SINCE THEY HAVE LONG + INT NOT STRING
 		if(phoneNumberHash.containsKey(phoneNumber)){
@@ -250,24 +261,25 @@ public class HashDataList{
 			addressNumberHash.put(addressNumber, addressNumberArray);
 		}
 
-		addPersonHash(addressRoad, addressRoadHash, toAdd);
-		addPersonHash(addressCity, addressCityHash, toAdd);
-		addPersonHash(addressProvince, addressProvinceHash, toAdd);
-		addPersonHash(addressCountry, addressCountryHash, toAdd);
-		addPersonHash(addressPostalCode, addressPostalCodeHash, toAdd);
+		addPersonHash(addressRoad, addressRoadHash, toAdd); //we add the person with the road to its hash
+		addPersonHash(addressCity, addressCityHash, toAdd); //we add the person with the city to its hash
+		addPersonHash(addressProvince, addressProvinceHash, toAdd); //we add the person with the province to its hash
+		addPersonHash(addressCountry, addressCountryHash, toAdd); //we add the person with the country to its hash
+		addPersonHash(addressPostalCode, addressPostalCodeHash, toAdd); //we add the person with the pc to its hash
 
 	}
 
+	//first check helps us check if the person being checked exists to the piece of information given
 	private String[] firstCheck(HashMap<String, ArrayList<Person>> hashToCheck, String detailToCheck, boolean matchCheck, ArrayList<Person> searching, ArrayList<Person> tmp){
 		String tmp1 = "";
 
 		if(matchCheck){
-			System.out.print(detailToCheck + ": ");
+			System.out.print(detailToCheck + ": "); //what information do we want to check
 			tmp1 = scan.nextLine();
-			if(tmp1.equals("menu") || tmp1.equals("Menu")){
+			if(tmp1.equals("menu") || tmp1.equals("Menu")){ //return to menu function
 				tmp1 = "menu";
 			}
-			if(tmp1.equals("exit") || tmp1.equals("Exit")){
+			if(tmp1.equals("exit") || tmp1.equals("Exit")){ //force exit function
 				System.exit(0);
 			}
 			if(!tmp1.equals("") && (!tmp1.equals("menu"))){
@@ -277,7 +289,7 @@ public class HashDataList{
 				}
 				catch(Exception e){
 					System.out.println(ANSI_RED + "ERROR! "+ ANSI_RESET + detailToCheck + " not found");
-					matchCheck = false;
+					matchCheck = false; //if that piece of information does not exist we will not even check the other pieces of information because there won't be a person associated to that information
 				}
 			}
 		}
@@ -286,11 +298,14 @@ public class HashDataList{
 		strArray[0] = tmp1;
 		strArray[1] = String.valueOf(matchCheck);
 
-		return strArray;
+		return strArray; //we cannot return 2 variables String and boolean so we return a String[] and the index 1 will have the boolean which we can extract while index 0 is the String of the name or return to menu
 	}
 
+	//search people function helps us check with KNOWN information all people who represent that information
 	@SuppressWarnings("unchecked")
-	public String searchPeople(){ //FIX ADDRESS NUMBER AND PHONE NUMBER
+	public String searchPeople(){
+
+		//we initialize the variables to useless ones so that the compiler doesn't say variable may not have been initialized
 		String firstName = "";
 		String lastName = "";
 		String phoneNumber = "";
@@ -325,16 +340,18 @@ public class HashDataList{
 
 		System.out.println(ANSI_PURPLE_BACKGROUND + "Step 1" + ANSI_RESET +": Enter individual's information.\n(Press Enter to skip unknown information)\n");
 
-		String[] strArray = firstCheck(firstNameHash, "First Name", match, searching, tmp);
-		firstName = strArray[0];
-		if(firstName.equals("menu")) return "menu";
-		match = Boolean.parseBoolean(strArray[1]);
+		String[] strArray = firstCheck(firstNameHash, "First Name", match, searching, tmp); // we check the first name information
+		firstName = strArray[0]; //extracting the first name
+		if(firstName.equals("menu")) return "menu"; //we return to the menu
+		match = Boolean.parseBoolean(strArray[1]); //extracting the boolean to check if we want to continue to the next pieces of information and steps
 
-		strArray = firstCheck(lastNameHash, "Last Name", match, searching, tmp);
+		//explained at first name 
+		strArray = firstCheck(lastNameHash, "Last Name", match, searching, tmp); 
 		lastName = strArray[0];
 		if(lastName.equals("menu")) return "menu";
 		match = Boolean.parseBoolean(strArray[1]);
 
+		//same as first check but we need to parse Long because it is a phone number
 		if(match){
 			while(tmptmp1){
 				System.out.print("Phone Number: ");
@@ -348,10 +365,10 @@ public class HashDataList{
 				if(!phoneNumber.equals("")){
 					long phoneNumberTmp = -1l;
 					try{
-						phoneNumberTmp = Long.parseLong(phoneNumber, 10);
+						phoneNumberTmp = Long.parseLong(phoneNumber, 10); //here we parse the Long
 					}
 					catch(Exception e){
-						System.out.println(ANSI_RED + "ERROR! "+ ANSI_RESET + "Malicious input. Please try again.");
+						System.out.println(ANSI_RED + "ERROR! "+ ANSI_RESET + "Malicious input. Please try again."); //we only accept inputs which can parse to Long
 						tmptmp2 = false;
 					}
 
@@ -377,6 +394,7 @@ public class HashDataList{
 			tmptmp2 = true;
 		}
 
+		//same as first check but we need to parse int because it is an address number
 		if(match){
 			while(tmptmp1){
 				System.out.print("Address Number: ");
@@ -390,10 +408,10 @@ public class HashDataList{
 				if(!addressNumber.equals("")){
 					int addressNumberTmp = -1;
 					try{
-						addressNumberTmp = Integer.parseInt(addressNumber);
+						addressNumberTmp = Integer.parseInt(addressNumber); //Here we parse the Int
 					}
 					catch(Exception e){
-						System.out.println(ANSI_RED + "ERROR! "+ ANSI_RESET + "Malicious input. Please try again.");
+						System.out.println(ANSI_RED + "ERROR! "+ ANSI_RESET + "Malicious input. Please try again."); //we only accept inputs which can parse to int
 						tmptmp2 = false;
 					}
 
@@ -419,26 +437,31 @@ public class HashDataList{
 			tmptmp2 = true;
 		}
 
+		//explained at first name 
 		strArray = firstCheck(addressRoadHash, "Address Road", match, searching, tmp);
 		addressRoad = strArray[0];
 		if(addressRoad.equals("menu")) return "menu";
 		match = Boolean.parseBoolean(strArray[1]);
 
+		//explained at first name 
 		strArray = firstCheck(addressCityHash, "City", match, searching, tmp);
 		addressCity = strArray[0];
 		if(addressCity.equals("menu")) return "menu";
 		match = Boolean.parseBoolean(strArray[1]);
 
+		//explained at first name 
 		strArray = firstCheck(addressProvinceHash, "Province", match, searching, tmp);
 		addressProvince = strArray[0];
 		if(addressProvince.equals("menu")) return "menu";
 		match = Boolean.parseBoolean(strArray[1]);
 
+		//explained at first name 
 		strArray = firstCheck(addressCountryHash, "Country", match, searching, tmp);
 		addressCountry = strArray[0];
 		if(addressCountry.equals("menu")) return "menu";
 		match = Boolean.parseBoolean(strArray[1]);
 
+		//explained at first name 
 		strArray = firstCheck(addressPostalCodeHash, "Postal Code", match, searching, tmp);
 		addressPostalCode = strArray[0];
 		if(addressPostalCode.equals("menu")) return "menu";
@@ -455,6 +478,7 @@ public class HashDataList{
 						   !addressCountry.equals("") ||
 						   !addressPostalCode.equals(""));
 
+		//after step 1 is complete we know if we have information to check or to abort
 		System.out.print("\n");
 		System.out.println(ANSI_PURPLE_BACKGROUND + "Step 2" + ANSI_RESET +": Creating list matching criteria.");
 		if(continueCheck){
@@ -468,19 +492,19 @@ public class HashDataList{
 			}
 		}
 		
-		if(continueCheck){
+		if(continueCheck){ //in here we add each person who just has at least one of the information in them
 			System.out.print("     -- Checking individuals who match all inputs.");
 			
 			//First Name
 			tmp.clear();
-			if(!firstName.equals("")){
+			if(!firstName.equals("")){ //we don't want to check unknown inputs
 				for(int i = 0; i < searching.size(); i++){
-					if(searching.get(i).getFirstName().equals(firstName)){
+					if(searching.get(i).getFirstName().equals(firstName)){ //add each person who has this piece of information to the tmp
 						tmp.add(searching.get(i));
 					}
 				}
 
-				searching = (ArrayList<Person>)tmp.clone();
+				searching = (ArrayList<Person>)tmp.clone(); //we don't want the tmp to be directly addressed so we clone it to the final searching list
 			}
 
 			//Last Name
@@ -592,18 +616,18 @@ public class HashDataList{
 			}
 			searching = (ArrayList<Person>)tmp.clone();
 
-			if(searching.size() == 0){
+			if(searching.size() == 0){ //if we have no one who matches our criteria we abort
 				System.out.println(" " + ANSI_RED + "x" + ANSI_RESET);
 				System.out.println("     -- " + ANSI_RED + "FAIL! No Matching Users Found!" + ANSI_RESET);
 			}
 
-			else{
+			else{ //or else we write down how many we found and let the user choose where to print
 				System.out.println(" " + ANSI_GREEN + ANSI_CHECKMARK + ANSI_RESET);
 				if(searching.size() == 1){
 					System.out.println("     -- " + ANSI_GREEN + "SUCCESS! 1 Matching Individual Has Been Found!" + ANSI_RESET);
 				}
 				if(searching.size() > 1){
-					System.out.println("     -- " + ANSI_GREEN + "SUCCESS! " + searching.size() + " Matching Individuals Have Been Found!" + ANSI_RESET);
+					System.out.println("     -- " + ANSI_GREEN + "SUCCESS! " + searching.size() + " Matching Individuals Have Been Found!" + ANSI_RESET); //proper Grammar is the key to success
 				}
 
 				//Because there are people to print we will ask if the user wants them in the console or in a TXT file.
@@ -613,7 +637,7 @@ public class HashDataList{
 				for(int i = 0; i < searching.size(); i++){
 					hashtmp.addPerson(searching.get(i), false);
 				}
-				if(Main.printUserChoice(hashtmp).equals("menu")) return "menu";
+				if(Main.printUserChoice(hashtmp).equals("menu")) return "menu"; //in the Main Object there is a method that lets the user choose between console print or custom file
 			}
 		}
 
@@ -622,6 +646,7 @@ public class HashDataList{
 			System.out.println("     -- " + ANSI_RED + "FAIL! No Matching Users Found!" + ANSI_RESET);
 		}
 
+		//if no data was given
 		else if (!continueCheck && checkNoInputs){
 			System.out.println("     -- " + ANSI_RED + "FAIL! No Data Given!" + ANSI_RESET);
 		}
@@ -631,10 +656,12 @@ public class HashDataList{
 		return "";
 	}
 
+	//copy file will be usefull to copy the data file to a data backup
 	private static void copyFile(File source, File dest) throws IOException {
  	   Files.copy(source.toPath(), dest.toPath());
 	}
 
+	//when we want to save the data we save it to the data file and then to a data backup
 	public void saveData(){
 
 		Person toSave = new Person();
@@ -656,15 +683,15 @@ public class HashDataList{
 	      	BufferedWriter output = new BufferedWriter(file);
 
 	      	System.out.print("     -- Writing Data to DATA File.");
-	      	output.write(informationDatabase.size() + "\n");
+	      	output.write(informationDatabase.size() + "\n"); //we write the size of the list so that the loader knows how much to load
 
 	      	// Writes the string to the file
-	      	for(int i = 0; i < informationDatabase.size(); i++){
+	      	for(int i = 0; i < informationDatabase.size(); i++){ //we save each person with an encryption shift of 20 so that those who crack the password shift won't be able to crack this one easily
 		    	toSave = informationDatabase.get(i);
 		      	output.write(encrypt(toSave.getFirstName(), 20) + "\n");
 		      	output.write(encrypt(toSave.getLastName(), 20) + "\n");
-		      	output.write(encrypt(String.valueOf(toSave.getPhoneNumber()), 20) + "\n");
-		      	output.write(encrypt(String.valueOf(toSave.getAddressNumber()), 20) + "\n");
+		      	output.write(encrypt(String.valueOf(toSave.getPhoneNumber()), 20) + "\n"); //change long to String
+		      	output.write(encrypt(String.valueOf(toSave.getAddressNumber()), 20) + "\n"); //change int to String
 		      	output.write(encrypt(toSave.getAddressRoad(), 20) + "\n");
 		      	output.write(encrypt(toSave.getAddressCity(), 20) + "\n");
 		      	output.write(encrypt(toSave.getAddressProvince(), 20) + "\n");
@@ -687,7 +714,7 @@ public class HashDataList{
 	    	System.out.print("     -- Copying DATA File to DATA BACKUP File.");
 		    Path original = Paths.get("../data/DATA.txt");
 			Path backup = Paths.get("../data/DATABACKUP.txt");
-			Files.copy(original, backup, StandardCopyOption.REPLACE_EXISTING);
+			Files.copy(original, backup, StandardCopyOption.REPLACE_EXISTING); //we copy the data file to the backup
 			System.out.println(" " + ANSI_GREEN + ANSI_CHECKMARK + ANSI_RESET);
 
 			if(informationDatabase.size() <= 1){
@@ -703,7 +730,7 @@ public class HashDataList{
 		}
 	}
 
-
+	//when we start the program we don't want to add the people we added yesterday one by one but let the program do it from the data file
 	public void loadData(){
 		Person toLoad = new Person();
 		String s;
@@ -719,13 +746,13 @@ public class HashDataList{
 
 			System.out.print("     -- Reading and Storing Data Locally.");
 			i = Integer.parseInt(br.readLine());
-			i1 = i;
+			i1 = i; //copy how many people are in the data file so that we can give a good success message
 
-			while(i != 0){
+			while(i != 0){ //base case
 				toLoad.setFirstName(decrypt(br.readLine(), 20));
 				toLoad.setLastName(decrypt(br.readLine(), 20));
-				toLoad.setPhoneNumber(Long.parseLong(decrypt(br.readLine(), 20)));
-				toLoad.setAddressNumber(Integer.parseInt(decrypt(br.readLine(), 20)));
+				toLoad.setPhoneNumber(Long.parseLong(decrypt(br.readLine(), 20))); //we parse to long so that we can store the phone number
+				toLoad.setAddressNumber(Integer.parseInt(decrypt(br.readLine(), 20))); //we parse to int so that we can store the address number
 				toLoad.setAddressRoad(decrypt(br.readLine(), 20));
 				toLoad.setAddressCity(decrypt(br.readLine(), 20));
 				toLoad.setAddressProvince(decrypt(br.readLine(), 20));
@@ -733,7 +760,7 @@ public class HashDataList{
 				toLoad.setAddressPostalCode(decrypt(br.readLine(), 20));
 				toLoad.setDescription(decrypt(br.readLine(), 20));
 
-				addPerson(toLoad, true);
+				addPerson(toLoad, true); //true because these people already have Added on Date descriptions
 				toLoad = new Person();
 
 				i--;
@@ -741,6 +768,7 @@ public class HashDataList{
 
 			br.close();
 			System.out.println(" " + ANSI_GREEN + ANSI_CHECKMARK + ANSI_RESET);
+			//how many have been successfuly loaded
 			if(i1 <= 1){
 				System.out.println(ANSI_GREEN + "Success! " + ANSI_RESET + i1 + " Person's Information Has Been Loaded Locally.");
 			}
@@ -757,6 +785,7 @@ public class HashDataList{
 
 	}
 
+	//printing data to console
 	public String toString(){
 		String s = "";
 		for (int i = 0; i < informationDatabase.size(); i++) {
