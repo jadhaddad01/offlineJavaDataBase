@@ -7,6 +7,7 @@ This project is allows for the local secure storage of people's personal informa
   * [Dependencies](#depd)
   * [Installation](#inst1)
   * [Running Program](#runp)
+- [Troubleshooting](#trbl)
 - [Encryption / Decryption](#encr)
   * [Encryption Method](#encrmethod)
   * [Decryption Method](#decrmethod)
@@ -26,7 +27,7 @@ This project is created using only the Java language. Using Ceasar Shift Cypher 
 - Requires Java 7 or higher to run.
 - Can run on Windows, Mac, or Linux.
 
-<a name="depd"></a>
+<a name="int1"></a>
 ### Installation Guide
 1. Clone repository to your system OR press code -> Download ZIP.
 2. If download as ZIP, extract offlineJavaDataBase-master.zip and access the extracted folder.
@@ -41,7 +42,7 @@ javac Main.java
 ```
 <a name="runp"></a>
 ### Running the Program
-1. Make sure you have followed the [Installation Guide](#depd).
+1. Make sure you have followed the [Installation Guide](#inst1).
 2. Run the Program.
 3. When asked for a password, type: **password** .
 
@@ -50,10 +51,18 @@ Terminal:
 java Main
 Please enter your password: password
 ```
+<a name="trbl"></a>
+## Troubleshooting
+The program already can process 2 types of errors when running.
+1. If DATA.txt (the personal data file) is missing or has no data, the program will create a new one, or restore it if it finds DATABACKUP.txt .
+2. If PASS.txt (the password file) is missing or has no data, the program will create a new one and assign **password** as the new password.
 
+Issues Solved:
+| Issue      | Solution     |
+|------------|--------------|
+|I forgot my password| Delete PASS.txt in ../data/ and run the program, as it will give you a new password.|
 <a name="encr"></a>
 ## Encryption / Decryption
-
 The encryption used in this project is the [Ceasar Shift Cypher](https://en.wikipedia.org/wiki/Caesar_cipher). This encryption shifts the characters of a String up by a certain number of characters in the [ASCII](https://www.ascii-code.com/) alphabet.
 
 The decryption uses the same principle, but instead of shifting upwards, it shifts the encrypted String downwards by the same amount to regain the original String.
