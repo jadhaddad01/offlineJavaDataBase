@@ -482,6 +482,102 @@ public class Main{
 		}
 	}
 
+	private static String inputedDetails(String detailID){
+		if(detailID.equals("Phone Number")){
+			boolean flagPhone = true;
+			String input = "";
+			while(flagPhone){
+				System.out.print(detailID + ": ");
+				input = scan.nextLine();
+				if(input.equals("exit") || input.equals("Exit")){
+					System.exit(0);
+				}
+				if(!input.equals("")){
+					long tmpPhone = -1l;
+					try{
+						tmpPhone = Long.parseLong(input, 10);
+						flagPhone = false;
+					}
+					catch(Exception e){
+						System.out.println(ANSI_RED + "ERROR! "+ ANSI_RESET + "Malicious input. Please try again.");
+					}
+				}
+				else{
+					flagPhone = false;
+				}
+			}
+
+			return input;
+		}
+		else if(detailID.equals("Address Number")){
+			boolean flagAddNum = true;
+			String input = "";
+			while(flagAddNum){
+				System.out.print(detailID + ": ");
+				input = scan.nextLine();
+				if(input.equals("exit") || input.equals("Exit")){
+					System.exit(0);
+				}
+				if(!input.equals("")){
+					long tmpAddNum = -1l;
+					try{
+						tmpAddNum = Integer.parseInt(input);
+						flagAddNum = false;
+					}
+					catch(Exception e){
+						System.out.println(ANSI_RED + "ERROR! "+ ANSI_RESET + "Malicious input. Please try again.");
+					}
+				}
+				else{
+					flagAddNum = false;
+				}
+			}
+
+			return input;
+		}
+
+
+		else{
+			System.out.print(detailID + ": ");
+			String input = scan.nextLine();
+			if(input.equals("exit") || input.equals("Exit")){
+				System.exit(0);
+			}
+
+			return input;
+		}
+	}
+
+	private static void addPeople(HashDataList list){
+		System.out.println(ANSI_PURPLE_BACKGROUND + "Step 1" + ANSI_RESET +": Enter individual's information.\n(Press Enter to skip unknown information)\n");
+		String firstName = inputedDetails("First Name");
+		String lastName = inputedDetails("Last Name");
+		String phoneNumber = inputedDetails("Phone Number");
+		String addressNumber = inputedDetails("Address Number");
+		String addressRoad = inputedDetails("Address Road");
+		String addressCity = inputedDetails("City");
+		String addressProvince = inputedDetails("Province");
+		String addressCountry = inputedDetails("Country");
+		String addressPostalCode = inputedDetails("Postal Code");
+		String description = inputedDetails("Description");
+
+		Person toAdd = new Person();
+
+		if(!firstName.equals("")) toAdd.setFirstName(firstName);
+		if(!lastName.equals("")) toAdd.setLastName(lastName);
+		if(!phoneNumber.equals("")) toAdd.setPhoneNumber(Long.parseLong(phoneNumber, 10));
+		if(!addressNumber.equals("")) toAdd.setAddressNumber(Integer.parseInt(addressNumber));
+		if(!addressRoad.equals("")) toAdd.setAddressRoad(addressRoad);
+		if(!addressCity.equals("")) toAdd.setAddressCity(addressCity);
+		if(!addressProvince.equals("")) toAdd.setAddressProvince(addressProvince);
+		if(!addressCountry.equals("")) toAdd.setAddressCountry(addressCountry);
+		if(!addressPostalCode.equals("")) toAdd.setAddressPostalCode(addressPostalCode);
+		if(!description.equals("")) toAdd.setDescription(description);
+
+		list.addPerson(toAdd, false);
+
+	}
+
 	public static void main(String[] args) {
 		//Intro
 		introOutro(true); //true for intro
@@ -502,7 +598,15 @@ public class Main{
 				printUserChoice(list);
 			}
 
-			break;
+			if(choice.equals("2")){
+				System.out.println("\nSearch People Requested.");
+				list.searchPeople();
+			}
+			
+			if(choice.equals("3")){
+				System.out.println("\nAdd Person Requested.");
+				addPeople(list);
+			}
 
 		}
 
