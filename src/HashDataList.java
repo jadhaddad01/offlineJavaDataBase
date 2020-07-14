@@ -734,15 +734,22 @@ public class HashDataList{
 		Person toSave = new Person();
 
 		try {
+
+			System.out.println("\nSaving Data to DATA + DATA BACKUP Files:");
+			System.out.print("     -- Creating DATA File.");
 	      	// Creates a FileWriter DATA
 	      	FileWriter file = new FileWriter("../data/DATA.txt");
+	      	System.out.println(" " + ANSI_GREEN + ANSI_CHECKMARK + ANSI_RESET);
 
+	      	System.out.print("     -- Creating DATA BACKUP File.");
 	      	//Create backup file
 	      	FileWriter fileBackup = new FileWriter("../data/DATABACKUP.txt");
+	      	System.out.println(" " + ANSI_GREEN + ANSI_CHECKMARK + ANSI_RESET);
 
 	      	// Creates a BufferedWriter
 	      	BufferedWriter output = new BufferedWriter(file);
 
+	      	System.out.print("     -- Writing Data to DATA File.");
 	      	output.write(informationDatabase.size() + "\n");
 
 	      	// Writes the string to the file
@@ -762,20 +769,31 @@ public class HashDataList{
 
 	      	// Closes the writer
 	      	output.close();
+	      	System.out.println(" " + ANSI_GREEN + ANSI_CHECKMARK + ANSI_RESET);
 	    }
 
 	    catch (Exception e) {
-	      
+	    	System.out.println(" " + ANSI_RED + "x" + ANSI_RESET);
 	    }
 
 	    //Create the backup
 	    try{
+	    	System.out.print("     -- Copying DATA File to DATA BACKUP File.");
 		    Path original = Paths.get("../data/DATA.txt");
 			Path backup = Paths.get("../data/DATABACKUP.txt");
 			Files.copy(original, backup, StandardCopyOption.REPLACE_EXISTING);
+			System.out.println(" " + ANSI_GREEN + ANSI_CHECKMARK + ANSI_RESET);
+
+			if(informationDatabase.size() <= 1){
+				System.out.println(ANSI_GREEN + "SUCCESS! " + ANSI_RESET + informationDatabase.size() + " Person's Information Has Been Saved To The Files.");
+			}
+			if(informationDatabase.size() > 1){
+				System.out.println(ANSI_GREEN + "SUCCESS! " + ANSI_RESET + informationDatabase.size() + " People's Information Have Been Saved To The Files."); //Grammar's important
+			}
+			System.out.println("-------------------\n");
 		}
 		catch(Exception e){
-
+			System.out.println(" " + ANSI_RED + "x" + ANSI_RESET);
 		}
 	}
 
@@ -784,11 +802,18 @@ public class HashDataList{
 		Person toLoad = new Person();
 		String s;
 		int i = 0;
+		int i1 = i;
 
 		try{
+			//try everything together and if something doesn't work it's because there is missing DATA in or the File itself
+			System.out.println("\nLoading Data from File:");
+			System.out.print("     -- Opening DATA File.");
 			BufferedReader br = new BufferedReader(new FileReader("../data/DATA.txt"));
+			System.out.println(" " + ANSI_GREEN + ANSI_CHECKMARK + ANSI_RESET);
 
+			System.out.print("     -- Reading and Storing Data Locally.");
 			i = Integer.parseInt(br.readLine());
+			i1 = i;
 
 			while(i != 0){
 				toLoad.setFirstName(decrypt(br.readLine(), 20));
@@ -809,8 +834,17 @@ public class HashDataList{
 			}
 
 			br.close();
+			System.out.println(" " + ANSI_GREEN + ANSI_CHECKMARK + ANSI_RESET);
+			if(i1 <= 1){
+				System.out.println(ANSI_GREEN + "Success! " + ANSI_RESET + i1 + " Person's Information Has Been Loaded Locally.");
+			}
+			if(i1 > 1){
+				System.out.println(ANSI_GREEN + "Success! " + ANSI_RESET + i1 + " People's Information Have Been Loaded Locally."); //Grammar my friend
+			}
+			System.out.println("-------------------");
 		}
 		catch(Exception e){
+			System.out.println(" " + ANSI_RED + "x" + ANSI_RESET); //x from where it would stop
 			Main.troubleshootMissingFile(false,false); //whatever crashes it means there is no data
 			loadData(); //after troubleshooting we try again
 		}
