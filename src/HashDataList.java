@@ -790,7 +790,7 @@ public class HashDataList{
 			if(informationDatabase.size() > 1){
 				System.out.println(ANSI_GREEN + "SUCCESS! " + ANSI_RESET + informationDatabase.size() + " People's Information Have Been Saved To The Files."); //Grammar's important
 			}
-			System.out.println("-------------------\n");
+			System.out.println("-------------------");
 		}
 		catch(Exception e){
 			System.out.println(" " + ANSI_RED + "x" + ANSI_RESET);

@@ -199,7 +199,7 @@ public class Main{
 		    	for(int i = 0; i <= genPass.length(); i++){
 		    		stringRepeat += "-";
 		    	}
-		    	System.out.println("------------------------------" + stringRepeat);
+		    	System.out.println("-------------------");
 			}
 		}
 		else{ //MAKE TROUBLESHOOT FOR DATA.TXT
@@ -236,6 +236,7 @@ public class Main{
 					if(i > 1){
 						System.out.println(ANSI_GREEN + "Success! " + ANSI_RESET +  i + " People's Information Have Been Restored."); //Grammar is important my friend
 					}
+					System.out.println("-------------------");
 				}
 				catch(Exception e){ //If this happens there is a fault in the memory and should work the next time tried
 					System.out.println(" " + ANSI_RED + "x" + ANSI_RESET);
