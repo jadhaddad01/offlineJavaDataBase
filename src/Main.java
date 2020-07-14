@@ -738,6 +738,13 @@ public class Main{
 				break; //we get out of the while loop
 			}
 
+			/*
+			if(choice.equals("6")){
+				System.out.println("\nRemove Person Requested");
+				if(removePerson().equals("menu")) continue; //if menu is inputted we go to the top of the while loop
+			}
+			*/
+
 		}
 
 		//Save data and create a backup
