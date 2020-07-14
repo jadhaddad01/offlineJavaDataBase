@@ -192,8 +192,14 @@ public class Main{
 			//Encrypt generic Pass
 			if(continueTroubleShoot){
 				saveEncryptTestPass(genPass);
-				System.out.println(ANSI_GREEN + "Success. "+ ANSI_RESET + "Your New Password is: " + ANSI_BOLD + genPass + ANSI_RESET);
-				System.out.println("---------------------------------------");
+				System.out.println(ANSI_GREEN + "Success! "+ ANSI_RESET + "Your New Password is: " + ANSI_BOLD + genPass + ANSI_RESET);
+
+				//For custom -----...
+				String stringRepeat = "";
+		    	for(int i = 0; i <= genPass.length(); i++){
+		    		stringRepeat += "-";
+		    	}
+		    	System.out.println("------------------------------" + stringRepeat);
 			}
 		}
 		else{ //MAKE TROUBLESHOOT FOR DATA.TXT
@@ -220,9 +226,21 @@ public class Main{
 					Path backup = Paths.get("../data/DATA.txt");
 					Files.copy(original, backup, StandardCopyOption.REPLACE_EXISTING);
 					System.out.println(" " + ANSI_GREEN + ANSI_CHECKMARK + ANSI_RESET);
+
+					//success with how many people restored
+					BufferedReader br = new BufferedReader(new FileReader("../data/DATA.txt"));
+					int i = Integer.parseInt(br.readLine());
+					if(i <= 1){ //1 or 0
+						System.out.println(ANSI_GREEN + "Success! " + ANSI_RESET +  i + " Person's Information Has Been Restored.");
+					}
+					if(i > 1){
+						System.out.println(ANSI_GREEN + "Success! " + ANSI_RESET +  i + " People's Information Have Been Restored."); //Grammar is important my friend
+					}
 				}
-				catch(Exception e){
+				catch(Exception e){ //If this happens there is a fault in the memory and should work the next time tried
 					System.out.println(" " + ANSI_RED + "x" + ANSI_RESET);
+					System.out.println(ANSI_RED + "FAIL! System Shutting Down!");
+					System.exit(0);
 				}
 			}
 			else{
@@ -233,9 +251,12 @@ public class Main{
 			      	output.write("0"); //default size of list is 0
 			      	output.close();
 			      	System.out.println(" " + ANSI_GREEN + ANSI_CHECKMARK + ANSI_RESET);
+			      	System.out.println(ANSI_GREEN + "Success! " + ANSI_RESET + "An Empty DATA File Has Been Restored.");
 				}
-				catch(Exception e){
+				catch(Exception e){ //If this happens there is a fault in the memory and should work the next time tried
 					System.out.println(" " + ANSI_RED + "x" + ANSI_RESET);
+					System.out.println(ANSI_RED + "FAIL! System Shutting Down!");
+					System.exit(0);
 				}
 			}
 		}
