@@ -103,6 +103,7 @@ import java.nio.file.StandardCopyOption;
 ```
 
 **Patterns:**
+
 For recurring code in a method, it is simplified to a call to another private in the same class. 
 ```java
 //add Person to Hash with each detail of information instead of writing the code 10 times
