@@ -58,9 +58,10 @@ The program already can process 2 types of errors when running.
 2. If PASS.txt (the password file) is missing or has no data, the program will create a new one and assign **password** as the new password.
 
 Issues Solved:
-| Issue      | Solution     |
+| **Issue**      | **Solution**     |
 |------------|--------------|
-|I forgot my password| Delete PASS.txt in ../data/ and run the program, as it will give you a new password.|
+|I forgot my password | Delete PASS.txt in ../data/ and run the program, as it will give you a new password.|
+|Someone changed the data in DATA.txt | Delete DATA.txt in ../data/ and run the program, as it will restore the good data from DATABACKUP.txt .|
 <a name="encr"></a>
 ## Encryption / Decryption
 The encryption used in this project is the [Ceasar Shift Cypher](https://en.wikipedia.org/wiki/Caesar_cipher). This encryption shifts the characters of a String up by a certain number of characters in the [ASCII](https://www.ascii-code.com/) alphabet.
