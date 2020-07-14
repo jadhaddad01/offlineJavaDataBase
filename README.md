@@ -11,7 +11,7 @@ This project is allows for the local secure storage of people's personal informa
 - [Architecture](#arch)
   * [Patterns and Frameworks](#ptfr)
   * [Design Diagram](#dsdg)
-  * [Modifying the System](#mods)
+  * [Modifying the Program](#modp)
 - [Encryption / Decryption](#encr)
   * [Encryption Method](#encrmethod)
   * [Decryption Method](#decrmethod)
@@ -150,6 +150,22 @@ This lets the user know, if at any point there is a failure, where that failure 
 ### Design Diagram
 The following design diagram is a class diagram of the system. This diagram has been drawn using [Umple](https://www.umple.org/)
 ![alt text](https://github.com/jadhaddad01/offlineJavaDataBase/blob/master/img/umple.png)
+
+<a name="modp"></a>
+### Modifying the Program
+It is recommended that only those who understand the Java language and how to program in Java modify this project and its code. It is also recommended that only additions to the program and its code are made, to prevent failures and errors in the program.
+With that said, it is highly encouraged that anyone who would like to modify this program and its code, do exactly that.
+
+**Helpful hints and tips for modification:**
+- A template for an additional choice in the menu is commented in the main method and menu method. If you uncomment it, you would be able to add an extra element to the menu.
+- Given that a new menu element is created, an example to practice would be to create a RemovePerson method in HashDataList.java . Steps to making the method work are:
+  * Ask the user for the password using the existing passCheck method in Main.java .
+  * Search for the person you want to remove using searchPeople method in HashDataList.java and out of the given people, create a method that chooses one of them.
+  * To finish, you will have to remove the Person from his/her information's HashMaps and then finally from the main ArrayList informationDatabase.
+  * Refer to the addPerson method in HashDataList for helpful information on the manipulation of HashMaps and ArrayLists.
+- The above example is a possibility, but anyone is free to do anything he/she wants with the code.
+- Most methods return a String in the case that "menu" has been inputted, so that we can quickly go back to the menu.
+
 
 <a name="encr"></a>
 ## Encryption / Decryption
