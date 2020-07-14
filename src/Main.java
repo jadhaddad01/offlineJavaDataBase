@@ -79,7 +79,7 @@ public class Main{
 	}
 
 	private static void introOutro(boolean intro){ //saving a little real estate by making the outro and intro in one method
-		if(!intro) System.out.println("Have a good day, Master.");
+		if(!intro) System.out.println("\nHave a good day, Master.");
 
 		//Showing the date
 		DateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss z");
@@ -328,8 +328,12 @@ public class Main{
 		System.out.println("--------------------------");
 
 		//Selection
+		System.out.println(ANSI_PURPLE_BACKGROUND + "P.S" + ANSI_RESET + " -> At Any Input: [exit -> Force Quit Program.]\n                     [menu -> Return to Menu]");
 		System.out.print("Choice: ");
 		String menuInt = scan.nextLine();
+		if(menuInt.equals("menu") || menuInt.equals("Menu")){
+    		return "menu";
+    	}
 		if(menuInt.equals("exit") || menuInt.equals("Exit")){
     		System.exit(0);
     	}
@@ -351,13 +355,16 @@ public class Main{
 				if(menuInt.equals("exit") || menuInt.equals("Exit")){
 		    		System.exit(0);
 		    	}
+		    	if(menuInt.equals("menu") || menuInt.equals("Menu")){
+		    		return "menu";
+		    	}
 			}
 		}
 
 		return menuInt;
 	}
 
-	public static void printUserChoice(HashDataList list){
+	public static String printUserChoice(HashDataList list){
 		System.out.println("----------------------------");
 		System.out.println("1 -> " + ANSI_BLUE + "Print to Console." + ANSI_RESET);
 		System.out.println("2 -> " + ANSI_YELLOW + "Print to Custom File." + ANSI_RESET);
@@ -365,6 +372,9 @@ public class Main{
 
 		System.out.print("Choice: ");
 		String menuInt = scan.nextLine();
+		if(menuInt.equals("menu") || menuInt.equals("Menu")){
+			return "menu";
+		}
 		if(menuInt.equals("exit") || menuInt.equals("Exit")){
 			System.exit(0);
 		}
@@ -379,6 +389,9 @@ public class Main{
 				System.out.println("                                        [2 -> " + ANSI_YELLOW + "Custom File" + ANSI_RESET + "]");
 				System.out.print("Choice: ");
 				menuInt = scan.nextLine();
+				if(menuInt.equals("menu") || menuInt.equals("Menu")){
+					return "menu";
+				}
 				if(menuInt.equals("exit") || menuInt.equals("Exit")){
 		    		System.exit(0);
 		    	}
@@ -393,9 +406,10 @@ public class Main{
 				System.out.println(list.getPerson(i));
 			}
 			
+			return "";
 		}
 
-		if(menuInt.equals("2")){
+		else{ //if it equals 2
 			System.out.println("\nPrint to Custom File Requested.");
 			System.out.println("-------------------------------");
 			String fileName = "";
@@ -405,6 +419,9 @@ public class Main{
 				System.out.println(ANSI_PURPLE_BACKGROUND + "1" + ANSI_RESET + " -- Please Choose a Name for your File. (" + ANSI_BOLD + "NAME" + ANSI_RESET + ".txt)");
 				System.out.print("Choice for " + ANSI_BOLD + "NAME" + ANSI_RESET + ": ");
 				fileName = scan.nextLine();
+				if(fileName.equals("menu") || fileName.equals("Menu")){
+					return "menu";
+				}
 				if(fileName.equals("exit") || fileName.equals("Exit")){
 					System.exit(0);
 				}
@@ -416,6 +433,9 @@ public class Main{
 				System.out.println("File Name = " + ANSI_BOLD + fileName + ANSI_RESET + "\nConfirm? (Y/N)");
 				System.out.print("Choice: ");
 				String confirmFileName = scan.nextLine();
+				if(confirmFileName.equals("menu") || confirmFileName.equals("Menu")){
+		    		return "menu";
+		   		}
 				if(confirmFileName.equals("exit") || confirmFileName.equals("Exit")){
 		    		System.exit(0);
 		   		}
@@ -424,6 +444,7 @@ public class Main{
 				while(flag1){
 					if(confirmFileName.equals("Y") || confirmFileName.equals("y")){
 						flag1 = false;
+						flag2 = false;
 					}
 					if(confirmFileName.equals("N") || confirmFileName.equals("n")){
 						flag1 = false;
@@ -432,6 +453,9 @@ public class Main{
 						System.out.println("Y = Correct File Name | N = False File Name");
 						System.out.print("Confirm? (" + ANSI_BOLD + fileName + ANSI_RESET + "): ");
 						confirmFileName = scan.nextLine();
+						if(confirmFileName.equals("menu") || confirmFileName.equals("Menu")){
+				    		return "menu";
+				    	}
 						if(confirmFileName.equals("exit") || confirmFileName.equals("Exit")){
 				    		System.exit(0);
 				    	}
@@ -440,9 +464,6 @@ public class Main{
 
 				if(fileName.equals(".txt")){
 					System.out.println(ANSI_RED + "FAIL! .txt Not A Valid File Name!\n" + ANSI_RESET);
-				}
-				else{
-					flag2 = false;
 				}
 			}
 
@@ -467,11 +488,11 @@ public class Main{
 
 		    	if(list.sizeInformationDatabase() == 1){
 					System.out.println(ANSI_GREEN + "SUCCESS! " + fileName + " has been created with " + list.sizeInformationDatabase() + " Individual's Information" + ANSI_RESET);
-					System.out.println("The file is located at the /data directory of the master directory.\n");
+					System.out.println(ANSI_PURPLE_BACKGROUND + "P.S" + ANSI_RESET + " -> The file is located at the /data directory of the master directory.\n");
 				}
 				if(list.sizeInformationDatabase() > 1){
 					System.out.println(ANSI_GREEN + "SUCCESS! " + fileName + " has been created with " + list.sizeInformationDatabase() + " Individuals' Information" + ANSI_RESET);
-					System.out.println("The file is located at the /data directory of the master directory.\n");
+					System.out.println(ANSI_PURPLE_BACKGROUND + "P.S" + ANSI_RESET + " -> The file is located at the /data directory of the master directory.\n");
 				}
 
 		      	// Closes the writer
@@ -481,6 +502,8 @@ public class Main{
 		    catch (Exception e) {
 		      e.getStackTrace();
 		    }
+
+		    return "";
 		}
 	}
 
@@ -491,6 +514,9 @@ public class Main{
 			while(flagPhone){
 				System.out.print(detailID + ": ");
 				input = scan.nextLine();
+				if(input.equals("menu") || input.equals("Menu")){
+					return "menu";
+				}
 				if(input.equals("exit") || input.equals("Exit")){
 					System.exit(0);
 				}
@@ -517,6 +543,9 @@ public class Main{
 			while(flagAddNum){
 				System.out.print(detailID + ": ");
 				input = scan.nextLine();
+				if(input.equals("menu") || input.equals("Menu")){
+					return "menu";
+				}
 				if(input.equals("exit") || input.equals("Exit")){
 					System.exit(0);
 				}
@@ -542,6 +571,9 @@ public class Main{
 		else{
 			System.out.print(detailID + ": ");
 			String input = scan.nextLine();
+			if(input.equals("menu") || input.equals("Menu")){
+					return "menu";
+				}
 			if(input.equals("exit") || input.equals("Exit")){
 				System.exit(0);
 			}
@@ -550,18 +582,28 @@ public class Main{
 		}
 	}
 
-	private static void addPeople(HashDataList list){
+	private static String addPeople(HashDataList list){
 		System.out.println(ANSI_PURPLE_BACKGROUND + "Step 1" + ANSI_RESET +": Enter individual's information.\n(Press Enter to skip unknown information)\n");
 		String firstName = inputedDetails("First Name");
+		if(firstName.equals("menu")) return "menu";
 		String lastName = inputedDetails("Last Name");
+		if(lastName.equals("menu")) return "menu";
 		String phoneNumber = inputedDetails("Phone Number");
+		if(phoneNumber.equals("menu")) return "menu";
 		String addressNumber = inputedDetails("Address Number");
+		if(addressNumber.equals("menu")) return "menu";
 		String addressRoad = inputedDetails("Address Road");
+		if(addressRoad.equals("menu")) return "menu";
 		String addressCity = inputedDetails("City");
+		if(addressCity.equals("menu")) return "menu";
 		String addressProvince = inputedDetails("Province");
+		if(addressProvince.equals("menu")) return "menu";
 		String addressCountry = inputedDetails("Country");
+		if(addressCountry.equals("menu")) return "menu";
 		String addressPostalCode = inputedDetails("Postal Code");
+		if(addressPostalCode.equals("menu")) return "menu";
 		String description = inputedDetails("Description");
+		if(description.equals("menu")) return "menu";
 
 		Person toAdd = new Person();
 
@@ -580,14 +622,16 @@ public class Main{
 		if(checkIfInputted){
 			list.addPerson(toAdd, false);
 			System.out.println(ANSI_GREEN + "Success! " + ANSI_RESET + "1 Person's Information Has Been Added.");
+			return "";
 		}
 		else{
 			System.out.println(ANSI_RED + "Fail!" + ANSI_RESET + " No Information Given.");
+			return "";
 		}
 
 	}
 
-	private static void changePass(){
+	private static String changePass(){
 		//Old Pass check
 		System.out.print(ANSI_PURPLE_BACKGROUND + "Step 1" + ANSI_RESET +": Enter your Old Password.");
 		passCheck();
@@ -595,26 +639,24 @@ public class Main{
 		//Choosing new pass
 		System.out.print("\n");
 		System.out.println(ANSI_PURPLE_BACKGROUND + "Step 2" + ANSI_RESET +": Choose a New Password.");
-		boolean newPassFlag = true;
 		boolean continueNewPass = true;
 		String newPass = "";
 		String newPassConfirm = "";
 
-		String encryptedPassKey = "";
-		String passInTxtNewPass = "";
-
-		FileWriter file;
-		BufferedWriter output;
-		BufferedReader brNewPass = null;
-
-		while(newPassFlag){
+		while(true){
 			System.out.print("Enter a New Password: ");
-    		newPass = scan.nextLine();
-    		if(newPass.equals("exit") || newPass.equals("Exit")){
+			newPass = scan.nextLine();
+			if(newPass.equals("menu") || newPass.equals("Menu")){
+	    		return "menu";
+	    	}
+			if(newPass.equals("exit") || newPass.equals("Exit")){
 	    		System.exit(0);
 	    	}
 	    	System.out.print("Confirm New Password: ");
 	    	newPassConfirm = scan.nextLine();
+	    	if(newPassConfirm.equals("menu") || newPassConfirm.equals("Menu")){
+	    		return "menu";
+	    	}
 	    	if(newPassConfirm.equals("exit") || newPassConfirm.equals("Exit")){
 	    		System.exit(0);
 	    	}
@@ -626,81 +668,13 @@ public class Main{
 	    	}
 	    	else{
 	    		System.out.println("\nSaving New Password.");
-	    		//Creating Encryption Key
-	    		System.out.print("     -- Encrypting New Password.");
-				try{
-					encryptedPassKey = encrypt(newPass,10);
-					System.out.println(" " + ANSI_GREEN + ANSI_CHECKMARK + ANSI_RESET);
-				}
-				catch(Exception e){
-					System.out.println(" " + ANSI_RED + "x" + ANSI_RESET);
-					continueNewPass = false;
-				}
-				//Testing Encryption Key
-				System.out.print("     -- Testing Encryption Key.");
-				if(decrypt(encryptedPassKey,10).equals(newPass) && continueNewPass){
-					System.out.println(" " + ANSI_GREEN + ANSI_CHECKMARK + ANSI_RESET);
-				}
-				else{
-					System.out.println(" " + ANSI_RED + "x" + ANSI_RESET);
-					continueNewPass = false;
-				}
-				//Writing New Encryption Key to PASS.txt
-				System.out.print("     -- Writing Encryption Key to File.");
-				if(continueNewPass){
-					try {
-				      file = new FileWriter("../data/PASS.txt");
-				      output = new BufferedWriter(file);
-				      output.write(encryptedPassKey);
-				      output.close();
-				      System.out.println(" " + ANSI_GREEN + ANSI_CHECKMARK + ANSI_RESET);
-				    }
-
-				    catch (Exception e) {
-				      System.out.println(" " + ANSI_RED + "x" + ANSI_RESET);
-				      continueNewPass = false;
-				    }
-				}
-				else{
-					System.out.println(" " + ANSI_RED + "x" + ANSI_RESET);
-					continueNewPass = false;
-				}
-				//Testing Encryption Key from File
-				System.out.print("     -- Testing Encryption Key from File.");
-				if(continueNewPass){
-					try{
-						brNewPass = new BufferedReader(new FileReader("../data/PASS.txt"));
-					}
-					catch(Exception e){
-						System.out.println("TXT File NOT FOUND.");
-						System.exit(0);
-					}
-
-					try{
-				    	passInTxtNewPass = brNewPass.readLine();
-					    brNewPass.close();
-					}
-					catch(Exception e){
-						System.out.println("NO DATA IN FILE.");
-						System.exit(0);
-					}
-
-					if(decrypt(passInTxtNewPass,10).equals(newPass)){
-						System.out.println(" " + ANSI_GREEN + ANSI_CHECKMARK + ANSI_RESET);
-						newPassFlag = false; 
-					}
-					else{
-						System.out.println(" " + ANSI_RED + "x" + ANSI_RESET);
-						continueNewPass = false;
-					}
-				}
-				else{
-					System.out.println(" " + ANSI_RED + "x" + ANSI_RESET);
-				    continueNewPass = false;
-				}
+	    		saveEncryptTestPass(newPass);
+	    		break;
 	    	}
-		}
+	    }
+
 		System.out.println("-------------------");
+		return "";
 	}
 
 	public static void main(String[] args) {
@@ -714,29 +688,29 @@ public class Main{
 		HashDataList list = new HashDataList();
 		list.loadData();
 
-		boolean backToMenu = true;
 		//CONTINUE TO CHANGE PASS
-		while(backToMenu){
+		while(true){
 			String choice = menu();
+			if(choice.equals("menu")) continue;
 
 			if(choice.equals("1")){
 				System.out.println("\nPrint Database Requested. Where Would You Like To Print?");
-				printUserChoice(list);
+				if(printUserChoice(list).equals("menu")) continue;
 			}
 
 			if(choice.equals("2")){
 				System.out.println("\nSearch People Requested.");
-				list.searchPeople();
+				if((list.searchPeople()).equals("menu")) continue;
 			}
 			
 			if(choice.equals("3")){
 				System.out.println("\nAdd Person Requested.");
-				addPeople(list);
+				if(addPeople(list).equals("menu")) continue;
 			}
 
 			if(choice.equals("4")){
 				System.out.println("\nChange Password Requested");
-				changePass();
+				if(changePass().equals("menu")) continue;
 			}
 
 			if(choice.equals("5")){

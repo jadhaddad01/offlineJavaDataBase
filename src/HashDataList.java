@@ -264,10 +264,13 @@ public class HashDataList{
 		if(matchCheck){
 			System.out.print(detailToCheck + ": ");
 			tmp1 = scan.nextLine();
+			if(tmp1.equals("menu") || tmp1.equals("Menu")){
+				tmp1 = "menu";
+			}
 			if(tmp1.equals("exit") || tmp1.equals("Exit")){
 				System.exit(0);
 			}
-			if(!tmp1.equals("")){
+			if(!tmp1.equals("") && (!tmp1.equals("menu"))){
 				try{
 					tmp = hashToCheck.get(tmp1);
 					searching.addAll(tmp);
@@ -287,7 +290,7 @@ public class HashDataList{
 	}
 
 	@SuppressWarnings("unchecked")
-	public ArrayList<Person> searchPeople(){ //FIX ADDRESS NUMBER AND PHONE NUMBER
+	public String searchPeople(){ //FIX ADDRESS NUMBER AND PHONE NUMBER
 		String firstName = "";
 		String lastName = "";
 		String phoneNumber = "";
@@ -324,16 +327,21 @@ public class HashDataList{
 
 		String[] strArray = firstCheck(firstNameHash, "First Name", match, searching, tmp);
 		firstName = strArray[0];
+		if(firstName.equals("menu")) return "menu";
 		match = Boolean.parseBoolean(strArray[1]);
 
 		strArray = firstCheck(lastNameHash, "Last Name", match, searching, tmp);
 		lastName = strArray[0];
+		if(lastName.equals("menu")) return "menu";
 		match = Boolean.parseBoolean(strArray[1]);
 
 		if(match){
 			while(tmptmp1){
 				System.out.print("Phone Number: ");
 				phoneNumber = scan.nextLine();
+				if(phoneNumber.equals("menu") || phoneNumber.equals("Menu")){
+					return "menu";
+				}
 				if(phoneNumber.equals("exit") || phoneNumber.equals("Exit")){
 					System.exit(0);
 				}
@@ -373,6 +381,9 @@ public class HashDataList{
 			while(tmptmp1){
 				System.out.print("Address Number: ");
 				addressNumber = scan.nextLine();
+				if(addressNumber.equals("menu") || addressNumber.equals("Menu")){
+					return "menu";
+				}
 				if(addressNumber.equals("exit") || addressNumber.equals("Exit")){
 					System.exit(0);
 				}
@@ -410,22 +421,27 @@ public class HashDataList{
 
 		strArray = firstCheck(addressRoadHash, "Address Road", match, searching, tmp);
 		addressRoad = strArray[0];
+		if(addressRoad.equals("menu")) return "menu";
 		match = Boolean.parseBoolean(strArray[1]);
 
 		strArray = firstCheck(addressCityHash, "City", match, searching, tmp);
 		addressCity = strArray[0];
+		if(addressCity.equals("menu")) return "menu";
 		match = Boolean.parseBoolean(strArray[1]);
 
 		strArray = firstCheck(addressProvinceHash, "Province", match, searching, tmp);
 		addressProvince = strArray[0];
+		if(addressProvince.equals("menu")) return "menu";
 		match = Boolean.parseBoolean(strArray[1]);
 
 		strArray = firstCheck(addressCountryHash, "Country", match, searching, tmp);
 		addressCountry = strArray[0];
+		if(addressCountry.equals("menu")) return "menu";
 		match = Boolean.parseBoolean(strArray[1]);
 
 		strArray = firstCheck(addressPostalCodeHash, "Postal Code", match, searching, tmp);
 		addressPostalCode = strArray[0];
+		if(addressPostalCode.equals("menu")) return "menu";
 		match = Boolean.parseBoolean(strArray[1]);
 
 		//Gives True if No Inputs are Given
@@ -597,7 +613,7 @@ public class HashDataList{
 				for(int i = 0; i < searching.size(); i++){
 					hashtmp.addPerson(searching.get(i), false);
 				}
-				Main.printUserChoice(hashtmp);
+				if(Main.printUserChoice(hashtmp).equals("menu")) return "menu";
 			}
 		}
 
@@ -612,7 +628,7 @@ public class HashDataList{
 
 		
 
-		return searching;
+		return "";
 	}
 
 	private static void copyFile(File source, File dest) throws IOException {
