@@ -4,8 +4,8 @@ This project is allows for the local secure storage of people's personal informa
 #### Table of Contents 
 - [ Description. ](#desc)
 - [ Encryption / Decryption. ](#encr)
-* [Encryption Method](#encrmethod)
-* [Decryption Method](#decrmethod)
+  * [Encryption Method](#encrmethod)
+  * [Decryption Method](#decrmethod)
 
 <a name="desc"></a>
 ## Description
@@ -24,13 +24,14 @@ In the source code, the personal data file uses a shift of 20 characters while t
 ```java
 //encrypt method encrypts a String by shifting each char up by charShift
 private static String encrypt(String toBeEncrypted, int charShift){
-		char[] ch = toBeEncrypted.toCharArray(); //char array
-		int i = 0;
-		for(char c : ch){
-			c += charShift; //shift up by charShift
-			ch[i] = c;
-			i++;
-		}
-		String encrypted = new String(ch); //switch back to String
-		return encrypted;
+	char[] ch = toBeEncrypted.toCharArray(); //char array
+	int i = 0;
+	for(char c : ch){
+		c += charShift; //shift up by charShift
+		ch[i] = c;
+		i++;
 	}
+	String encrypted = new String(ch); //switch back to String
+	return encrypted;
+}
+```
