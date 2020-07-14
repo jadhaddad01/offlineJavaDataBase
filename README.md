@@ -43,6 +43,12 @@ javac Main.java
 2. Run the Program.
 3. When asked for a password, type: **password** .
 
+Terminal:
+```
+java Main
+Please enter your password: password
+```
+
 <a name="encr"></a>
 ## Encryption / Decryption
 
