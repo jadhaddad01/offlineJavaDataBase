@@ -9,6 +9,9 @@ This project is allows for the local secure storage of people's personal informa
   * [Running Program](#runp)
 - [Troubleshooting](#trbl)
 - [Test Examples](#tstx)
+- [Requirements](#rqrm)
+  * [User Stories](#usrs)
+  * [Use Cases](#uscs)
 - [Architecture](#arch)
   * [Patterns and Frameworks](#ptfr)
   * [Design Diagram](#dsdg)
@@ -71,6 +74,20 @@ Issues Solved:
 <a name="tstx"></a>
 ## Test Examples
 For tests and examples of how to use the program, click [here](https://github.com/jadhaddad01/offlineJavaDataBase/wiki/Tests)
+
+<a name="rqrm"></a>
+## Requirements
+<a name="usrs"></a>
+### User Stories
+- As a government agency, we want personal information to be stored locally and encrypted so that only we can see the data.
+- As an IT support in that government agency, I want information on what the program is doing and if a certain area of the program fails, to know where to be able troubleshoot the program easily.
+- As a government agency supervisor, I want to be able to change the password so that I have control over the program.
+<a name="uscs"></a>
+### Use Cases
+- All external data has to be encrypted and can only be decrypted inside the program.
+- A password protects for unintended decryption and can be changed.
+- If the external files such as the data and pass files are erased or are deleted, the program should troubleshoot and create new ones and restore them if possible.
+- The UI should be easily readable and understood.
 
 <a name="arch"></a>
 ## Architecture
