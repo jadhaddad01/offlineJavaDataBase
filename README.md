@@ -8,6 +8,7 @@ This project is allows for the local secure storage of people's personal informa
   * [Installation](#inst1)
   * [Running Program](#runp)
 - [Troubleshooting](#trbl)
+- [Test Examples](#tstx)
 - [Architecture](#arch)
   * [Patterns and Frameworks](#ptfr)
   * [Design Diagram](#dsdg)
@@ -66,6 +67,10 @@ Issues Solved:
 |------------|--------------|
 |I forgot my password | Delete PASS.txt in ../data/ and run the program, as it will give you a new password.|
 |Someone changed the data in DATA.txt | Delete DATA.txt in ../data/ and run the program, as it will restore the good data from DATABACKUP.txt .|
+
+<a name="tstx"></a>
+## Test Examples
+For tests and examples of how to use the program, click [here](https://github.com/jadhaddad01/offlineJavaDataBase/wiki/Tests)
 
 <a name="arch"></a>
 ## Architecture
