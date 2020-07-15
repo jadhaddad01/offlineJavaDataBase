@@ -28,7 +28,7 @@ This project is created using only the Java language. Using Ceasar Shift Cypher 
 ## Usage Guide
 <a name="depd"></a>
 ### Dependencies
-- Requires Java 7 or higher to run.
+- Requires Java JDK 7 (java, javac) or higher to run.
 - Can run on Windows, Mac, or Linux.
 
 <a name="inst1"></a>
