@@ -4,6 +4,7 @@ This project is allows for the local secure storage of people's personal informa
 #### Table of Contents 
 - [Description](#desc)
 - [Usage Guide](#inst)
+  * [Tutorial](#tuto)
   * [Dependencies](#depd)
   * [Installation](#inst1)
   * [Running Program](#runp)
@@ -30,6 +31,11 @@ This project is created using only the Java language. Using Ceasar Shift Cypher 
 
 <a name="inst"></a>
 ## Usage Guide
+
+<a name="tuto"></a>
+### Tutorial
+[![Watch the video](https://img.youtube.com/vi/8hMP5crzj6c/maxresdefault.jpg)](https://youtu.be/8hMP5crzj6c)
+
 <a name="depd"></a>
 ### Dependencies
 - Requires Java JDK 7 (java, javac) or higher to run.
