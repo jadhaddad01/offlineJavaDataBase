@@ -240,7 +240,7 @@ private static String decrypt(String toBeDecrypted, int charShift){
 
 <a name="cont"></a>
 ## Contributors
-- Jad Haddad : jadmail01@gmail.com
+- Jad Haddad : jadhaddad01@protonmail.com
 
 <a name="lics"></a>
 ## License
