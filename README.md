@@ -1,5 +1,5 @@
 # Offline Java DataBase 
-This project is allows for the local secure storage of people's personal information, protected by a password and encryption to the data. 
+This project allows for the local secure storage of people's personal information, protected by a password and encryption to the data. 
  
 #### Table of Contents 
 - [Description](#desc)
